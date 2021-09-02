@@ -1,0 +1,20 @@
+.course-accepted{
+    background-color: #9370DB;
+    color: white;
+}
+
+.course-new{
+    background-color: #1E90FF;
+    color: white;
+}
+
+.course-pending{
+    background-color: #40E0D0;
+    color: white;
+}
+
+.course-draft{
+    background-color: #313131;
+    color: white;
+}
+
