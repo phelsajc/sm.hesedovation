@@ -1,7 +1,7 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
-      <a data-toggle="modal" data-target="#myModaltopic" href="#" class="btn btn-info btn-sm pull-right">+ {{ __('adminstaticword.Add') }}</a>
+      <a data-toggle="modal" data-target="#myModaltopic" href="#" class="btn btn-info btn-sm pull-left">+ {{ __('adminstaticword.Add') }}</a>
 
       <div class="table-responsive">
       

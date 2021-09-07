@@ -171,11 +171,14 @@ use App\Delete_messages;
               <br>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <label for="exampleInputDetails">{{ __('adminstaticword.ShortDetail') }}<sup class="redstar">*</sup></label>
                   <textarea name="short_detail" rows="3" class="form-control" >{!! $cor->short_detail !!}</textarea>
                 </div>
-                <div class="col-md-6">
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
                   <label for="exampleInputDetails">{{ __('adminstaticword.Requirements') }}<sup class="redstar">*</sup></label>
                   <textarea name="requirement" id="requirement" rows="3" class="form-control" required >{!! $cor->requirement !!}</textarea>
                 </div>

@@ -186,17 +186,17 @@
                                 @endif
 
                                 <li>
-                                	(@php
+                                	@php
                                         $data = App\ReviewRating::where('course_id', $course->id)->get();
                                         if(count($data)>0){
 
-                                            echo count($data);
+                                            echo count($data).' ratings';
                                         }
                                         else{
 
-                                            echo "0";
+                                            echo "";
                                         }
-                                    @endphp {{ __('frontstaticword.rating') }})
+                                    @endphp {{--  __('frontstaticword.rating')  --}}
                                 </li> 
                             </ul>
                             <p class="btm-20">{{ str_limit($course->short_detail, $limit = 70, $end='...') }}</p>
@@ -756,17 +756,17 @@
                                     </div>
                                     <ul>
                                         <li>
-                                        	(@php
+                                        	@php
 				                                $data = App\ReviewRating::where('course_id', $course->id)->get();
 				                                if(count($data)>0){
 
-				                                    echo count($data);
+				                                    echo count($data).' ratings';
 				                                }
 				                                else{
 
-				                                    echo "0";
+				                                    echo "";
 				                                }
-				                            @endphp {{ __('frontstaticword.ratings') }})
+				                            @endphp 
                                         </li> 
                                     </ul>
                                 </div>

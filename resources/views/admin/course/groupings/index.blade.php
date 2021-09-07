@@ -2,7 +2,7 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
-      <a data-toggle="modal" data-target="#myModalGroups" href="#" class="btn btn-info btn-sm pull-right" onclick="newGroup()">+ {{ __('adminstaticword.Add') }}</a>
+      <a data-toggle="modal" data-target="#myModalGroups" href="#" class="btn btn-info btn-sm pull-left" onclick="newGroup()">+ {{ __('adminstaticword.Add') }}</a>
 
       <div class="table-responsive">
       

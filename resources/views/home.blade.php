@@ -208,7 +208,7 @@
                                         </li>
                                         @endif
                                       <li>
-                                        (@php
+                                        @php
                                             $data = App\ReviewRating::where('course_id', $recent_course->id)->get();
                                             if(count($data)>0){
 
@@ -216,9 +216,9 @@
                                             }
                                             else{
 
-                                                echo "0";
+                                                echo "";
                                             }
-                                        @endphp)
+                                        @endphp
                                     </li> 
                                     </ul>
                                 </div>
@@ -411,7 +411,7 @@ else{
                                         </li>
                                         @endif
                                         <li>
-                                            (@php
+                                            @php
                                                 $data = App\ReviewRating::where('course_id', $enrol->courses->id)->get();
                                                 if(count($data)>0){
 
@@ -419,9 +419,9 @@ else{
                                                 }
                                                 else{
 
-                                                    echo "0";
+                                                    echo "";
                                                 }
-                                            @endphp)
+                                            @endphp
                                         </li> 
                                     </ul>
                                 </div>
@@ -676,7 +676,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                                         </li>
                                         @endif
                                         <li>
-                                            (@php
+                                            @php
                                                 $data = App\ReviewRating::where('course_id', $c->id)->get();
                                                 if(count($data)>0){
 
@@ -684,9 +684,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                                                 }
                                                 else{
 
-                                                    echo "0";
+                                                    echo "";
                                                 }
-                                            @endphp)
+                                            @endphp
                                         </li> 
                                     </ul>
                                 </div>
@@ -1156,7 +1156,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                                         </li>
                                         @endif
                                         <li>
-                                            (@php
+                                            @php
                                                 $data = App\ReviewRating::where('course_id', $c['id'])->get();
                                                 if(count($data)>0){
 
@@ -1164,9 +1164,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                                                 }
                                                 else{
 
-                                                    echo "0";
+                                                    echo "";
                                                 }
-                                            @endphp)
+                                            @endphp
                                         </li> 
                                     </ul>
                                 </div>

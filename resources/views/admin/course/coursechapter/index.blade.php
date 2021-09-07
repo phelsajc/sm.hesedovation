@@ -5,8 +5,8 @@
  
   <div class="row">
     <div class="col-md-12">
-      <a data-toggle="modal" data-target="#myModalp" href="#" class="btn btn-info btn-sm pull-right">+ {{ __('adminstaticword.Add') }}</a> 
-      <button type="button" class="btn btn-primary btn-sm pull-right" onclick="view_archive()">View Archive</button>
+      <a data-toggle="modal" data-target="#myModalp" href="#" class="btn btn-info btn-sm pull-left">+ {{ __('adminstaticword.Add') }}</a> 
+      <button type="button" class="btn btn-primary btn-sm pull-left" onclick="view_archive()">View Archive</button>
       <br>
       <br>
       <div class="table-responsive">

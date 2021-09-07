@@ -10,7 +10,7 @@
 <section class="content">
   <div class="row">
     <div class="col-md-12">
-      <a data-toggle="modal" data-target="#myModaljj" href="#" class="btn btn-info btn-sm pull-right">+ {{ __('adminstaticword.Add') }}</a>
+      <a data-toggle="modal" data-target="#myModaljj" href="#" class="btn btn-info btn-sm pull-left">+ {{ __('adminstaticword.Add') }}</a>
       <br><br>
       <div class="table-responsive">
         <table id="example1" class="table table-bordered table-striped">
