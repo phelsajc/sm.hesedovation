@@ -21,6 +21,7 @@
                   <th>Type</th> 
                   <th style="color: red;">{{ __('frontstaticword.YourAnswer') }}</th>
                   <th style="color: #48A3C6;">{{ __('frontstaticword.CorrectAnswer') }}</th>
+                  <th style="color: #48A3C6;">Points</th>
                   <th style="color: #48A3C6;">Action</th>
                 </tr>
               </thead>
@@ -71,13 +72,24 @@
                       <td>
                         @if ($a['type']=="pg"||$a['type']=="sa")
                             @if ($a['points'])
-                                {{$a['points']}}
+                              {{$a['points']}}
+                              @else
+                              No Score Available
+                            @endif
+                        @else
+                          1
+                        @endif
+                      </td>
+
+                      <td>
+                        @if ($a['type']=="pg"||$a['type']=="sa")
+                            @if ($a['points'])
+                               
                               @else
                               <button type="button" class="btn btn-xs btn-info" onclick="givePoints({{$a['ans_id']}})">Set Points</button>
                             @endif
                         @endif
                       </td>
-
                       {{-- <td>{{ $a->quiz->type }}</td>
                        <td>{{ $a->user_answer }}</td>
                       <td>{{ $a->answer }}</td> --}}
@@ -104,6 +116,7 @@
           <div id="printableArea">
 
            <h3 class="text-center main-block-heading">{{-- {{ __('frontstaticword.scorecard') }}  --}}Score Card</h3>
+          {{--  <p>Pragraph and Short answer is not yet included.</p> --}}
             <br/>
 
             <table class="table table-bordered result-table">
@@ -122,24 +135,33 @@
                     @php
                       $mark = 0;
                       $ca=0;
+                      $check_pg_or_sa=0;
                       $correct = collect();
+                      $correct_answer = 0;
+                      $counter_array = array();
                     @endphp
                     @foreach ($ans_ans as $answer)
 
                       @if($answer['type']=="mc")
                         @if ($answer['answer'] == $answer['user_answer'] )
                           @php
-                          /* echo $answer['type'] ; */
+                            /* echo $answer['type'] ; */
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                       @elseif($answer['type']=="sc")
                         @if ($answer['answer'] == $answer['user_answer'] )
                           @php
-                          /* echo $answer['type'] ; */
+                            /* echo $answer['type'] ; */
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                       @elseif($answer['type']=="cb")
@@ -147,23 +169,28 @@
                           @php
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                         @elseif($answer['type']=="pg"||$answer['type']=="sa")
                           @if ($answer['points'])
                               @php
-                                  $ca=$ca+$answer['points'];
+                                $check_pg_or_sa=$check_pg_or_sa+$answer['points'];
                               @endphp
                           @endif
                       @endif
                       
                     @endforeach
-                    {{$ca}}
+                    {{-- {{$ca}} --}}
+                    {{sizeof($counter_array)}}
                   </td>
                   <td>{{$topics->per_q_mark}}</td>
                     @php
-                        $correct = $mark*$topics->per_q_mark;
+                        $correct = ($mark*$topics->per_q_mark) + $check_pg_or_sa;
                     @endphp
+                  {{-- <td>{{$correct}}</td> --}}
                   <td>{{$correct}}</td>
                 </tr>
               </tbody>

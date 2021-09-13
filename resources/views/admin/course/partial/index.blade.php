@@ -398,6 +398,84 @@ use App\Delete_messages;
                        
 
                         <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-default">Action</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              {{-- <li>
+                                <form action="{{ route('course.quick',$cor->id) }}" method="POST">
+                                  {{ csrf_field() }}
+                                  <input type="hidden" id="st_{{$cor->id}}" name="st_{{$cor->id}}">
+                                  @if($cor->status ==6||$cor->status ==0||$cor->status ==1)
+                                    @if($cor->status ==6||$cor->status ==0)
+                                      <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="dd btn-danger">
+                                          {{ __('adminstaticword.Active') }}
+                                      </button>
+                                    @endif      
+                                  
+                                    @if($cor->status ==1||$cor->status ==7)
+                                      <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="dd btn-danger">
+                                          {{ __('adminstaticword.Deactive') }}
+                                      </button>
+                                    @endif
+                                  @endif
+                                </form>
+                              </li>
+                        
+                              <li>
+                                <form action="{{ route('course.quick_reject',$cor->id) }}" method="POST">
+                                  {{ csrf_field() }}
+                                  @if($cor->status ==0||$cor->status ==1||$cor->status ==7)
+                                    <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn-danger dd">
+                                      Reject
+                                    </button>
+                                  @endif
+                                </form>
+                              </li> --}}
+                        
+                              <li>
+                                @if($cor->status ==1)
+                                <form action="{{ route('course.quick_live2',$cor->id) }}" method="POST">
+                                  {{ csrf_field() }}
+                                    <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="dd btn-danger">
+                                      Live this Course
+                                    </button>
+                                </form>
+                                @endif
+                              </li>
+                        
+                              <li>
+                                <form>
+                                <button  type="button" onclick="goTo('{{ route('course.show',$cor->id) }}')" class="dd btn-danger">
+                                  Edit
+                                </button>
+                                </form>
+                              </li>
+                        
+                              <li>
+                                <form>
+                                  <button  type="button" title="Delete" data-toggle="modal" data-target="#course_modal{{ $cor->id }}" class="dd btn-danger">
+                                    Delete
+                                  </button>
+                                </form>
+                              </li>
+                        
+                              
+                              <li>
+                                <form>
+                                  <button type="button" title="Archive" data-toggle="modal" data-target="#archive_course{{ $cor->id }}" class="dd btn-danger">
+                                    Archive
+                                  </button>
+                                </form>
+                              </li>
+                        
+                            </ul>
+                          </div>
+{{-- xxxxxxxxxxxxxxxxxxxxxxxxxx
+                          
                           <a class="btn btn-warning btn-sm" title="Edit" href="{{ route('course.show',$cor->id) }}">
                           <i class="glyphicon glyphicon-pencil"></i></a>
                           
@@ -412,33 +490,18 @@ use App\Delete_messages;
                           @endif
 
                           
-                          {{-- <form method="post" action="{{url('course/'.$cor->id)}}
-                            "data-parsley-validate class="form-horizontal form-label-left">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button onclick="return confirm('{{$get_message->text}}')" title="Delete"  type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash-o"></i></button>
-                          </form> --}}
                           <a title="Delete" data-toggle="modal" data-target="#course_modal{{ $cor->id }}" class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i>
                           </a>
 
                           <a title="Archive" data-toggle="modal" data-target="#archive_course{{ $cor->id }}" class="btn btn-warning btn-sm">
                             <i class="fa fa-archive"></i>
-                          </a>
+                          </a> --}}
                         </td>
 
-                        {{-- <td>
-                          <form method="post" action="{{url('course/'.$cor->id)}}
-                            "data-parsley-validate class="form-horizontal form-label-left">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button onclick="return confirm('Are you sure you want to delete?')" title="Delete"  type="submit" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i></button>
-                          </form>
-                        </td> --}}
 
                         <div id="course_modal{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
                           <div class="modal-dialog modal-sm">
-                            <!-- Modal content-->
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -462,7 +525,6 @@ use App\Delete_messages;
                         
                         <div id="archive_course{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
                           <div class="modal-dialog modal-sm">
-                            <!-- Modal content-->
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>

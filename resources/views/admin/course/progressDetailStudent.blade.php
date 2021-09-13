@@ -42,9 +42,9 @@
                       <thead>
                           <tr>
                           <th>Title</th>
-                          <th>Total No. of Questions</th>
-                          <th>Correct No. of Questions</th>
-                          <th>Per Question Mark</th>
+                          <th>Total No. of Questions.</th>
+                           <th>Correct No. of Questions</th>
+                         <th>Per Question Mark</th>
                           <th>Total Marks</th>
                           <th>Action</th>
                           </tr>
@@ -90,11 +90,15 @@
                             </td>
 
                               @php
-                              $ca=0;
-                                $ct='';
-                                $mark = 0;
-                                $ans = App\QuizAnswer::where('topic_id',$value['id'])->get(); 
-                                $ans_ans = array();
+                                  $ca=0;
+                                  $ct='';
+                                  $mark = 0;
+                                  $ans = App\QuizAnswer::where('topic_id',$value['id'])->get(); 
+                                  $ans_ans = array();
+                                  $check_pg_or_sa=0;
+                                  $counter_array = array();
+                                  
+ /*  dd($ans); */
                                 foreach ($ans as $key => $values) {
                                     $row = array();
                                     $row['answer'] = $values->answer;
@@ -102,6 +106,8 @@
                                     $q = App\Quiz::where('id', $values->question_id)->first();
                                     $row['type'] = $q->type;
                                     $row['ans_id'] = $values->id;
+                                    $row['id'] = $values->question_id;
+                                    $row['points'] = $values->points;
                                     if($q->type=="cb"){
                                         if($values->ans1){
                                             $user_answer_array[] = $values->ans1;
@@ -133,16 +139,18 @@
                                 }
                                 
                               @endphp
-
                               @foreach ($ans_ans as $answer)
                               @php
                               $ct = $answer['type'];
                               @endphp
-                              @if($answer['type']=="mc")
+                              {{-- @if($answer['type']=="mc")
                               @if ($answer['answer'] == $answer['user_answer'] )
                                 @php
                                   $mark++;
                                   $ca++;
+                                  if (!in_array("a_".$answer['id'], $counter_array)) {
+                                      array_push($counter_array,"a_".$answer['id']);
+                                  }
                                 @endphp
                               @endif
                             @elseif($answer['type']=="sc")
@@ -150,6 +158,9 @@
                                 @php
                                   $mark++;
                                   $ca++;
+                                  if (!in_array("a_".$answer['id'], $counter_array)) {
+                                      array_push($counter_array,"a_".$answer['id']);
+                                  }
                                 @endphp
                               @endif
                             @elseif($answer['type']=="cb")
@@ -157,18 +168,65 @@
                                 @php
                                   $mark++;
                                   $ca++;
+                                  if (!in_array("a_".$answer['id'], $counter_array)) {
+                                      array_push($counter_array,"a_".$answer['id']);
+                                  }
                                 @endphp
                               @endif
-                            @endif
+                            @endif --}}
+
+                            @if($answer['type']=="mc")
+                        @if ($answer['answer'] == $answer['user_answer'] )
+                          @php
+                            /* echo $answer['type'] ; */
+                            $mark++;
+                            $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
+                          @endphp
+                        @endif
+                      @elseif($answer['type']=="sc")
+                        @if ($answer['answer'] == $answer['user_answer'] )
+                          @php
+                            /* echo $answer['type'] ; */
+                            $mark++;
+                            $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
+                          @endphp
+                        @endif
+                      @elseif($answer['type']=="cb")
+                        @if (array_diff($user_answer_array, $ca_answer_array) === array_diff($ca_answer_array, $user_answer_array))
+                          @php
+                            $mark++;
+                            $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
+                          @endphp
+                        @endif
+                        @elseif($answer['type']=="pg"||$answer['type']=="sa")
+                          @if ($answer['points'])
+                              @php
+                                $check_pg_or_sa=$check_pg_or_sa+$answer['points'];
+                              @endphp
+                          @endif
+                      @endif
 
                               @endforeach
-                            <td>
-                              {{$ca}}
-                            </td>
+                          <td>
+                              {{-- {{$ca}} --}}
+                              {{sizeof($counter_array)}} x
+                            </td> 
 
                             <td>{!!$get_per_q!!}</td>
+                            @php
+                                $correct = ($mark*$get_per_q) + $check_pg_or_sa;
+                            @endphp
                             <td>
-                              {{$get_total_topic}}
+                              {{$correct}} 
                             </td>
                             <td>
                              <button type="button" class="btn btn-xs btn-info" onclick="checkResults({{$value['id']}})">View</button>

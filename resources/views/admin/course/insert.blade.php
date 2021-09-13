@@ -148,14 +148,14 @@
                 </div>
                 <div class="col-md-6">
                   <label for="exampleInputTit1e">{{ __('adminstaticword.Requirements') }} <sup class="redstar">*</sup></label>
-                  <textarea name="requirement" rows="3"  class="form-control" placeholder="Enter Requirements" required >{{ (old('requirement')) }}</textarea>
+                  <textarea name="requirement" id="requirement" rows="3"  class="form-control" placeholder="Enter Requirements" >{{ (old('requirement')) }}</textarea>
                 </div>
               </div>           
               <br> 
 
               <div class="row">
                 <div class="col-md-12">
-                  <label for="exampleInputTit1e">{{ __('adminstaticword.Detail') }} <sup class="redstar">*</sup></label>
+                  <label for="exampleInputTit1e">{{ __('adminstaticword.Detail') }}</label>
                   <textarea id="detail" name="detail" rows="3" class="form-control">{{ (old('detail')) }}</textarea>
                 </div>
               </div>

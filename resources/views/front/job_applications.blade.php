@@ -27,6 +27,7 @@
 		@php			
 			use App\Jobs;
 			use App\User;
+			use App\JobsHiring;
 		@endphp
 		<div class="profile-info-block">
 			
@@ -37,6 +38,7 @@
 				<th>Job Title</th>
 				<th>Date Applied</th>
 				<th>Employer</th>
+				<th>Status</th>
 				<th>Action</th>
 			  </tr>
 			</thead>
@@ -47,12 +49,13 @@
 					@endphp
 					@foreach ($getJobs as $item)
 					@php
-						$getJobDetail = Jobs::where(['id'=>$item->id])->first();
+						$getJobDetail = Jobs::where(['id'=>$item->job_id])->first();
 						$employer = User::where(['id'=>$getJobDetail->employer_id])->first();
+						$job_status = JobsHiring::where(['job_id'=>$item->job_id,'user_id'=>Auth::user()->id])->first();
 					@endphp
 						<tr>
 							<td align="center">
-								{{$int}}
+								{{$item->id}}
 							</td>
 							<td align="center">
 								{{$getJobDetail->title}}
@@ -62,6 +65,14 @@
 							</td>
 							<td align="center">
 								{{$employer->fname}}
+							</td>
+							<td align="center">
+								@if ($job_status)
+									<button type="button" class="btn btn-success btn-xs">Hired</button>	
+									@else
+									<button type="button" class="btn btn-success btn-xs">Pending</button>	
+									
+								@endif
 							</td>
 							<td align="center">
 								<a href="{{ url('manage-jobs-applications-convo') }}/{{$item->job_id}}/{{$getJobDetail->employer_id}}/{{Auth::user()->id}}" class="btn btn-success btn-xs">View</a>

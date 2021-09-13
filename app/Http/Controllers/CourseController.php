@@ -618,7 +618,6 @@ class CourseController extends Controller
       }
       else
       {
-        $getQuizChapter  = array();
         return view('front.course_detail',compact('course','getQuizChapter' ,'courseinclude','whatlearns','coursechapters','courseclass', 'coursereviews', 'reviews', 'relatedcourse', 'ad', 'bigblue', 'meetings', 'currency'));
       }
       
@@ -636,9 +635,12 @@ class CourseController extends Controller
       $coursequestions = Question::where('course_id','=',$id)->get();
       $courseclass= CourseClass::get();
       $announsments = Announcement::where('course_id','=',$id)->get();
+      
+      $getQuizChapter  = array();
 
       if(Auth::check())
         {
+          $getQuizChapter = QuizTopic::where(['course_id'=>$id])->get();
 
       $progress = CourseProgress::where('course_id','=',$id)->where('user_id', Auth::User()->id)->first();
 
@@ -646,7 +648,7 @@ class CourseController extends Controller
 
       $appointment = Appointment::where('course_id','=',$id)->where('user_id', Auth::User()->id)->get();
       
-        return view('front.course_content',compact('course','courseinclude','whatlearns','coursechapters','courseclass', 'coursequestions', 'announsments', 'progress', 'assignment', 'appointment'));
+        return view('front.course_content',compact('course', 'getQuizChapter' ,'courseinclude','whatlearns','coursechapters','courseclass', 'coursequestions', 'announsments', 'progress', 'assignment', 'appointment'));
       }
      
       return Redirect::route('login')->withInput()->with('delete', trans('flash.PleaseLogin')); 

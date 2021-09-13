@@ -645,17 +645,21 @@
                                                             @auth
                                                                 @if($class->type == "journal")
 
-                                                                <button type="button" class="btn btn-sm btn-danger" onclick="open_journal({{$class->id}})">Open Journal</button>
+                                                               <!-- <button type="button" class="btn btn-sm btn-danger" onclick="open_journal({{$class->id}})">Open Journal</button> -->
 
                                                                 @endif
                                                             @endauth
                                                         </td>
 
                                                         <td class="txt-rgt">
-                                                        @if($class->type =='video')
-                                                        {{ $class['duration'] }}{{ __('frontstaticword.min') }}
-                                                        @else
-                                                        {{ $class['size'] }}mb
+                                                        @if($class->type =='video')                                                 
+                                                            @if($class->duration)                                                        
+                                                                {{ $class['duration'] }}{{ __('frontstaticword.min') }}                                                       
+                                                            @endif       
+                                                        @else                                                
+                                                            @if($class->size)                                                        
+                                                                {{ $class['size'] }}mb                                                   
+                                                            @endif 
                                                         @endif
 
 
@@ -670,7 +674,7 @@
                                                             @if($value->section_id==$chapter->id)
                                                                 <tr>
                                                                     <th class="class-icon">
-                                                                        <a href="#" title="Course"><i class="fa-pen"></i></a>
+                                                                        <a href="#" title="Course"><i class="fas fa-pen"></i></a>
                                                                     </th>
 
                                                                     <td>
@@ -680,7 +684,7 @@
                                                                             <div class="koh-faq">
                                                                                 <div class="koh-faq-question">
 
-                                                                                <a href="{{URL::to('/start_quiz')}}/{{$value->id}}" > <span class="koh-faq-question-span"> {{$value->title}}  </span> </a>
+                                                                                <a href="javascript:void(0)" > <span class="koh-faq-question-span"> {{$value->title}}  </span> </a>
 
                                                                                 </div>
                                                                             </div>
@@ -717,19 +721,14 @@
 
                 <div class="requirements">
                     <h3>{{ __('frontstaticword.Requirements') }}</h3>
-                    <ul>
-                        <li class="comment more">
-                            @if(strlen($course->requirement) > 400)
-                            {{substr($course->requirement,0,400)}}
-                            <span class="read-more-show hide_content"><br>+&nbsp;See More</span>
-                            <span class="read-more-content"> {{substr($course->requirement,400,strlen($course->requirement))}}
-                            <span class="read-more-hide hide_content"><br>-&nbsp;See Less</span> </span>
+                     @if(strlen($course->requirement) > 400)
+                            {!!substr($course->requirement,0,400)!!}
+                             <span class="read-more-show hide_content"><br>+&nbsp;See More</span> 
+                            <span class="read-more-content"> {!!substr($course->requirement,400,strlen($course->requirement))!!}
+                           <span class="read-more-hide hide_content"><br>-&nbsp;See Less</span> </span>
                             @else
-                            {{$course->requirement}}
+                            {!!$course->requirement!!}
                             @endif
-                        </li>
-
-                    </ul>
                 </div>
                 <div class="description-block btm-30">
                     <h3>{{ __('frontstaticword.Description') }}</h3>

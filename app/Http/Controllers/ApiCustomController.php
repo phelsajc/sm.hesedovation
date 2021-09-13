@@ -91,6 +91,7 @@ class ApiCustomController extends Controller
         $course_journal = CourseJournal::where(['course_id'=>$id,'user_id'=>$uid])->first();
         $quiz_topic = QuizTopic::where(['course_id'=>$id])->get();        
         $user_info = User::where(['id'=>$uid])->first();
+        $topics=QuizTopic::where('id',$id)->first();
         
         $user_id = $uid."_".$id;
         /* $course = Order::where(['course_id'=>$id])->get();
@@ -104,7 +105,7 @@ class ApiCustomController extends Controller
             $row['img'] = $user->user_img;
             $course_data[] = $row; 
         } */
-        return view('admin.course.progressDetailStudent',compact('course_data', 'course_journal', 'user_id', 'quiz_topic', 'user_info' ));    
+        return view('admin.course.progressDetailStudent',compact('course_data', 'topics' ,'course_journal', 'user_id', 'quiz_topic', 'user_info' ));    
     }    
     
     public function givePoints(Request $request)
@@ -133,6 +134,7 @@ class ApiCustomController extends Controller
         foreach ($ans as $key => $value) {
             $row = array();
             $row['answer'] = $value->answer;
+            $row['id'] = $value->question_id;
             $row['user_answer'] = $value->user_answer;
             $q = Quiz::where('id', $value->question_id)->first();
             $row['type'] = $q->type;

@@ -45,11 +45,15 @@ class QuickUpdateController extends Controller
 
         if($request->$aa==1){
     		DB::table('courses')->where('id','=',$id)->update(['status' => "0"]);
-    		return back()->with('delete','Status changed to Deactive !');
-        }else{
+            dd($request);exit;
+    	//	return back()->with('delete','Status changed to Deactive !');
+        }else if($request->$aa==0){
+    		DB::table('courses')->where('id','=',$id)->update(['status' => "1"]);
+    		return back()->with('success','Status changed to Active !');
+        }/* else{
             DB::table('courses')->where('id','=',$id)->update(['status' => "1"]);	
     		return back()->with('success','Status changed to Active !');
-        }
+        } */
     }
 
     public function courseQuickReject($id)

@@ -125,7 +125,10 @@
                     @php
                       $mark = 0;
                       $ca=0;
+                      $check_pg_or_sa=0;
                       $correct = collect();
+                      $correct_answer = 0;
+                      $counter_array = array();
                     @endphp
                     @foreach ($ans_ans as $answer)
 
@@ -135,6 +138,9 @@
                           /* echo $answer['type'] ; */
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                       @elseif($answer['type']=="sc")
@@ -143,6 +149,9 @@
                           /* echo $answer['type'] ; */
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                       @elseif($answer['type']=="cb")
@@ -150,22 +159,27 @@
                           @php
                             $mark++;
                             $ca++;
+                            if (!in_array("a_".$answer['id'], $counter_array)) {
+                                array_push($counter_array,"a_".$answer['id']);
+                            }
                           @endphp
                         @endif
                         @elseif($answer['type']=="pg"||$answer['type']=="sa")
                           @if ($answer['points'])
                               @php
-                                  $ca=$ca+$answer['points'];
+                                //$ca=$ca+$answer['points'];
+                                $check_pg_or_sa=$check_pg_or_sa+$answer['points'];
                               @endphp
                           @endif
                       @endif
                       
                     @endforeach
-                    {{$ca}}
+                    {{-- {{$ca}} --}}
+                    {{sizeof($counter_array)}}
                   </td>
                   <td>{{$topics->per_q_mark}}</td>
                     @php
-                        $correct = $mark*$topics->per_q_mark;
+                    $correct = ($mark*$topics->per_q_mark) + $check_pg_or_sa;
                     @endphp
                   <td>{{$correct}}</td>
                 </tr>

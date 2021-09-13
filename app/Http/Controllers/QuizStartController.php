@@ -179,6 +179,7 @@ class QuizStartController extends Controller
         foreach ($ans as $key => $value) {
             $row = array();
             $row['answer'] = $value->answer;
+            $row['id'] = $value->question_id;
             $row['user_answer'] = $value->user_answer;
             $q = Quiz::where('id', $value->question_id)->first();
             $row['type'] = $q->type;

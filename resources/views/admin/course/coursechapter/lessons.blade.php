@@ -26,10 +26,9 @@
         <!-- form start -->
         <div class="box-body">
           <div class="form-group">
-            <a data-toggle="modal" data-target="#myModalab" href="#" class="btn btn-info btn-sm pull-right">+ {{ __('adminstaticword.Add') }}</a>
-            <button type="button" class="btn btn-primary btn-sm pull-right" onclick="view_lesson_archive()">View Archive</button>
-            <button type="button" class="btn btn-warning btn-sm pull-right" onclick="reorder_modal()">Reorder Lesson</button>
-              
+            <a data-toggle="modal" data-target="#myModalab" href="#" class="btn btn-info btn-sm pull-left">+ {{ __('adminstaticword.Add') }}</a>
+            <button type="button" class="btn btn-primary btn-sm pull-left" onclick="view_lesson_archive()">View Archive</button>
+            <button type="button" class="btn btn-warning btn-sm pull-left" onclick="reorder_modal()">Reorder Lesson</button>
             <table class="table display compact table-bordered "  style="width:100%!important" id="tblLessons">
                 <thead class="">
                     <tr>
@@ -412,6 +411,7 @@ function showLessons() {
     $('#tblLessons').DataTable().destroy(); 
     $('#tblLessons').DataTable({
       "filter":false,
+    "bLengthChange": false,
       "sort":false,
                     "ajax": {
                         "type": "GET",

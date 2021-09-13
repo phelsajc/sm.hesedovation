@@ -396,26 +396,39 @@ use App\Delete_messages;
                     </li>
 
                     <li>
-                      <a href="{{URL::to('/course')}}/{{request()->route('id')}}/{{ $cor->slug}}" target="_blank" class="">Preview Course Overview</a>
+                      <a href="{{URL::to('/course')}}/ {{request()->route('id')}}/{{ $cor->slug}}" target="_blank" class="">Preview Course Overview</a>
                     </li>
 
                     <li>
-                      <a href="{{URL::to('/coursecontent')}}/{{request()->route('id')}}/{{ $cor->slug}}" target="_blank" class="">Preview Course Detail</a>
+                      <a href="{{URL::to('/coursecontent')}}/ {{request()->route('id')}}/{{ $cor->slug}}" target="_blank" class="">Preview Course Detail</a>
                     </li>
 
-                    @if(Auth::User()->role == "admin")
-                    <li>                      
-                      <form>
+                    <li>
+                     {{--  <form action="{{ route('course.quick',$cor->id) }}" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="st_{{$cor->id}}" name="st_{{$cor->id}}">
                         @if($cor->status ==6||$cor->status ==0||$cor->status ==1)
                           @if($cor->status ==6||$cor->status ==0)
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#status_modal{{ $cor->id }}">{{ __('adminstaticword.Active') }}</a>
+                            <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn-danger">
+                                {{ __('adminstaticword.Active') }}
+                            </button>
                           @endif      
                         
                           @if($cor->status ==1||$cor->status ==7)
-                          <a href="javascript:void(0)" data-toggle="modal" data-target="#status_modal{{ $cor->id }}">Deactivate</a>
+                            <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn-danger">
+                                {{ __('adminstaticword.Deactive') }}
+                            </button>
                           @endif
                         @endif
+                      </form> --}}
+
+                      
+                      <form>
+                        <button  type="button" title="Delete" data-toggle="modal" data-target="#course_modal{{ $cor->id }}" class="btn-danger">
+                          Delete
+                        </button>
                       </form>
+
                     </li>
 
                     
@@ -429,12 +442,15 @@ use App\Delete_messages;
                         @endif
                       </form>
                     </li>
-                    @endif
 
                     <li>
                       @if($cor->status ==1)
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#live_modal{{ $cor->id }}">  Live this Course</a>
-                      
+                        <form action="quickupdate/course_live/{{ $cor->id }}" method="POST">
+                          {{ csrf_field() }}
+                            <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn-danger">
+                              Live this Course
+                            </button>
+                        </form>
                       @endif
                     </li>
 
@@ -447,12 +463,20 @@ use App\Delete_messages;
                     </li> --}}
 
                     <li>
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#course_modal{{ $cor->id }}">  Delete</a>
+                      <form>
+                        <button  type="button" title="Delete" data-toggle="modal" data-target="#course_modal{{ $cor->id }}" class="btn-danger">
+                          Delete
+                        </button>
+                      </form>
                     </li>
 
                     
                     <li>
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#archive_course{{ $cor->id }}">  Archive</a>
+                      <form>
+                        <button type="button" title="Archive" data-toggle="modal" data-target="#archive_course{{ $cor->id }}" class="btn-danger">
+                          Archive
+                        </button>
+                      </form>
                     </li>
 
                   </ul>
@@ -468,118 +492,6 @@ use App\Delete_messages;
     <!--/.col (right) -->
   </div>
   <!-- /.row -->
-
-  <div id="live_modal{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <div class="delete-icon"></div>
-        </div>
-        <div class="modal-body text-center">
-          <h4 class="modal-heading">            
-            Live Course
-          </h4>
-          <p>Are you sure to live this course?</p>
-        </div>
-        <div class="modal-footer">
-          
-          <form action="{{url('quickupdate/course_live/'.$cor->id)}}" method="POST">
-            {{ csrf_field() }}
-            <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn dd-primary">
-                Live this Course
-              </button>
-              <button  type="button"  data-dismiss="modal" class="btn btn-danger">
-                  Cancel
-              </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="archive_modal{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <div class="delete-icon"></div>
-        </div>
-        <div class="modal-body text-center">
-          <h4 class="modal-heading">            
-            Live Course
-          </h4>
-          <p>Are you sure to live this course?</p>
-        </div>
-        <div class="modal-footer">
-          
-          <form action="{{url('quickupdate/course_live/'.$cor->id)}}" method="POST">
-            {{ csrf_field() }}
-            <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn dd-primary">
-                Live this Course
-              </button>
-              <button  type="button"  data-dismiss="modal" class="btn btn-danger">
-                  Cancel
-              </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="status_modal{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <div class="delete-icon"></div>
-        </div>
-        <div class="modal-body text-center">
-          <h4 class="modal-heading">            
-            @if($cor->status ==6||$cor->status ==0)
-                Activate
-              @endif      
-            
-              @if($cor->status ==1||$cor->status ==7)
-                Deactivate
-              @endif
-          </h4>
-          <p>Are you sure to @if($cor->status ==6||$cor->status ==0)
-            Activate
-          @endif      
-        
-          @if($cor->status ==1||$cor->status ==7)
-            Deactivate
-          @endif this course?</p>
-        </div>
-        <div class="modal-footer">
-          <form action="{{ route('course.quick',$cor->id) }}" method="POST">
-            {{ csrf_field() }}
-            <input type="hidden" id="st_{{$cor->id}}" name="st_{{$cor->id}}">
-            @if($cor->status ==6||$cor->status ==0||$cor->status ==1)
-              @if($cor->status ==6||$cor->status ==0)
-              <button  type="Submit" onclick="changeStat({{$cor->status}},{{$cor->id}})" class="btn dd-primary">
-                  Activate
-              </button>
-              <button  type="button"  data-dismiss="modal" class="btn btn-danger">
-                  Cancel
-              </button>
-              @endif      
-            
-              @if($cor->status ==1||$cor->status ==7)
-                <button  type="Submit" onclick="changeStat(0,{{$cor->id}})" class="btn dd-primary">
-                  Deactivate 
-                </button>
-                <button  type="button"  data-dismiss="modal" class="btn btn-danger">
-                    Cancel
-                </button>
-              @endif
-            @endif
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div id="course_modal{{ $cor->id }}" class="delete-modal modal fade" role="dialog">
     <div class="modal-dialog modal-sm">

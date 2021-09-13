@@ -73,7 +73,7 @@
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="{{url('admin/quiztopic/'.$topic->id)}}">Edit</a></li>
                       <li><a href="{{route('answersheet', $topic->id)}}">Delete Answer</a></li>
-                      <li><a href="{{route('questions.show', $topic->id)}}">Add Question</a></li>
+                      <li><a href="{{route('questions.show', $topic->id)}}">Manage Question</a></li>
                       <li><a href="{{route('show.quizreport', $topic->id)}}">Show Report</a></li>
                       <li class="divider"></li>
                       <li>

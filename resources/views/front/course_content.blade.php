@@ -73,7 +73,7 @@
                         @endif
                         @endif
                         <li>
-                            <a href="{{ route('user.course.show',['id' => $course->id, 'slug' => $course->slug ]) }}" class="course_btn">Start Course <i class="fa fa-chevron-right"></i></a>
+                            <a href="{{ route('user.course.show',['id' => $course->id, 'slug' => $course->slug ]) }}" class="course_btn">Course Detail<i class="fa fa-chevron-right"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -212,7 +212,7 @@
                     <a class="nav-item nav-link active text-center" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{{ __('frontstaticword.Overview') }}</a>
                     <a class="nav-item nav-link text-center" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">{{ __('frontstaticword.CourseContent') }}</a>
                     <a class="nav-item nav-link text-center" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Comments</a>
-                    {{-- <a class="nav-item nav-link text-center" id="nav-quiz-tab" data-toggle="tab" href="#nav-quiz" role="tab" aria-controls="nav-quiz" aria-selected="false">{{ __('frontstaticword.Quiz') }}</a> --}}
+                    <a class="nav-item nav-link text-center" id="nav-quiz-tab" data-toggle="tab" href="#nav-quiz" role="tab" aria-controls="nav-quiz" aria-selected="false">{{ __('frontstaticword.Quiz') }}</a>
                     <a class="nav-item nav-link text-center" id="nav-announcement-tab" data-toggle="tab" href="#nav-announcement" role="tab" aria-controls="nav-announcement" aria-selected="false">{{ __('frontstaticword.Announcements') }}</a>
                     
                     @if($gsetting->assignment_enable == 1)
@@ -442,63 +442,69 @@
                                             <table class="table">  
                                                 <tbody>
                                                     <tr>
-                                                    <td width="10px">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input filled-in material-checkbox-input" type="checkbox" name="checked[]" value="{{$coursechapter->id}}" id="checkbox{{$coursechapter->id}}"  {{ isset($progress->mark_chapter_id) && in_array($coursechapter->id, $progress->mark_chapter_id) ? "checked" : "" }} >
-                                                            <label class="form-check-label" for="invalidCheck">
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                        <td width="10px">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input filled-in material-checkbox-input" type="checkbox" name="checked[]" value="{{$coursechapter->id}}" id="checkbox{{$coursechapter->id}}"  {{ isset($progress->mark_chapter_id) && in_array($coursechapter->id, $progress->mark_chapter_id) ? "checked" : "" }} >
+                                                                <label class="form-check-label" for="invalidCheck">
+                                                                </label>
+                                                            </div>
+                                                        </td>
+
+                                                        
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-6">
+                                                                    <div class="section">{{ __('frontstaticword.Section') }}: <?php echo $i;?></div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-6">
+                                                                    <div class="section-dividation text-right">
+                                                                        @php
+                                                                            $classone = App\CourseClass::where('coursechapter_id', $coursechapter->id)->get();
+                                                                            if(count($classone)>0){
+
+                                                                                echo count($classone);
+                                                                            }
+                                                                            else{
+
+                                                                                echo "0";
+                                                                            }
+                                                                        @endphp
+                                                                        Lessons
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-10 col-8">
+
+                                                                    <div class="profile-heading">{{ $coursechapter->chapter_name }}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="col-lg-2 col-4">
+                                                                    <div class="text-right">
+                                                                        @php
+                                                                        $classtwo =  App\CourseClass::where('coursechapter_id', $coursechapter->id)->sum("duration");
+                                                                        echo $duration_round2 = round($classtwo,2);
+                                                                        @endphp
+                                                                        
+                                                                        {{ __('frontstaticword.min') }}
+
+                                                                        @if($coursechapter->file != NULL)
+                                                                        <a href="{{ asset('files/material/'.$coursechapter->file) }}" target="_blank" download="{{$coursechapter->file}}" title="Learning Material"><i class="fa fa-download"></i></a>
+                                                                        @endif
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    
 
                                                     
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-6">
-                                                                <div class="section">{{ __('frontstaticword.Section') }}: <?php echo $i;?></div>
-                                                            </div>
-                                                            <div class="col-lg-6 col-6">
-                                                                <div class="section-dividation text-right">
-                                                                    @php
-                                                                        $classone = App\CourseClass::where('coursechapter_id', $coursechapter->id)->get();
-                                                                        if(count($classone)>0){
+                                                    
 
-                                                                            echo count($classone);
-                                                                        }
-                                                                        else{
-
-                                                                            echo "0";
-                                                                        }
-                                                                    @endphp
-                                                                    Lessons
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-10 col-8">
-
-                                                                <div class="profile-heading">{{ $coursechapter->chapter_name }}
-                                                                </div>
-                                                                
-                                                            </div>
-                                                            <div class="col-lg-2 col-4">
-                                                                <div class="text-right">
-                                                                    @php
-                                                                    $classtwo =  App\CourseClass::where('coursechapter_id', $coursechapter->id)->sum("duration");
-                                                                    echo $duration_round2 = round($classtwo,2);
-                                                                    @endphp
-                                                                    
-                                                                    {{ __('frontstaticword.min') }}
-
-                                                                    @if($coursechapter->file != NULL)
-                                                                    <a href="{{ asset('files/material/'.$coursechapter->file) }}" download="{{$coursechapter->file}}" title="Learning Material"><i class="fa fa-download"></i></a>
-                                                                    @endif
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                             </div>
@@ -583,6 +589,12 @@
                                                         @if($class->date_time != NULL)
                                                            <div class="live-class">Live at: {{ $class->date_time }}</div>
                                                         @endif
+                                                        
+                                                        @if($class->type == "journal")
+
+                                                        <button type="button" class="btn btn-sm btn-danger" onclick="open_journal({{$class->id}})">Open Journal</button>
+
+                                                        @endif
                                                     </td>
 
                                                     <td class="class-size txt-rgt">
@@ -594,15 +606,59 @@
                                                         @endif
 
                                                         @if($class->file != NULL)
-                                                        <a href="{{ asset('files/class/material/'.$class->file) }}" download="{{$class->file}}" title="Learning Material"><i class="fa fa-download"></i></a>
+                                                        <a href="{{ asset('files/class/material/'.$class->file) }}" download title="Learning Material"><i class="fa fa-download"></i></a>
                                                         @endif
                                                     </td>
                                                 </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
                                     @endif
                                     @endforeach
+                                    
+                                    <div class="card-body">
+                                        <table class="table">  
+                                            <tbody>
+                                                @if(sizeof($getQuizChapter) > 0)
+                                                        @foreach($getQuizChapter as $value)
+                                                            @if($value->section_id==$coursechapter->id)
+                                                                <tr>
+                                                                    <th class="class-icon">
+                                                                        <a href="#" title="Course"><i class="fas fa-pen"></i></a>
+                                                                    </th>
+
+                                                                    <td>
+
+                                                                        <div class="koh-tab-content">
+                                                                        <div class="koh-tab-content-body">
+                                                                            <div class="koh-faq">
+                                                                                <div class="koh-faq-question">
+
+                                                                                <a href="{{URL::to('/start_quiz')}}/{{$value->id}}" > <span class="koh-faq-question-span"> {{$value->title}}  </span> </a>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+                                                                    </td> 
+                                                                    <td>
+                                                                    </td>
+                                                                    <td>
+                                                                    </td>
+                                                                    <td>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    
+
                                 </div>
                             </div>
                             @endforeach
@@ -1392,6 +1448,47 @@
             </div>
         </div> 
     </div>
+
+
+    <div class="modal fade" id="modalJournal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">My Journal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="box box-primary">
+              <div class="panel panel-sum">
+                <div class="modal-body">
+                    <!-- php
+                        $courses = App\Course::first();
+                    endphp -->
+                    <form id="journalForm" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="detail">{{ __('frontstaticword.Detail') }}:<sup class="redstar">*</sup></label>
+                                    <textarea name="journal_content" id="journal_content" rows="4"  class="form-control" placeholder=""></textarea>
+                                    <input type="hidden" id="lid" name="lid">
+                                    <input type="hidden" id="jid" name="jid">
+                                    <input type="hidden" id="cid" name="cid" value="{{request()->route('id')}}">
+                                </div>
+                            </div>                                                              
+                        </div>
+                        <br>
+                        <div class="box-footer">
+                         <button type="button" onclick="saveJournal()" class="btn btn-lg col-md-3 btn-primary">{{ __('frontstaticword.Submit') }}</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
 </section>
 <!-- courses-content end -->
 
@@ -1464,7 +1561,60 @@ $(document).bind('cbox_closed', function(){
     });
   });
 })(jQuery);
+function open_journal(id) {
+        //id -> class id or lesson id
+                    tinymce.get("journal_content").setContent('');
+        $.ajax({
+            url: "{{ url('viewlessonJournal') }}/"+id,
+            type: "get",
+            dataType: 'JSON',
+            success: function(data) {
+                if(data){
+                    tinymce.get("journal_content").setContent(data.content);
+                    $("#jid").val(data.id);
+                }else{                    
+                    tinymce.get("journal_content").setContent('');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error! Contact IT Department.');
+            }
+        });
 
+        $("#lid").val(id);
+        $("#modalJournal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+    }
+
+    function saveJournal() {
+        var j = $('#journalForm').serializeArray();
+        console.log(j)
+        j.push({
+            name: "content",
+            value:  tinymce.get("journal_content").getContent(),
+        });
+        $.ajax({
+            url: "{{ url('savelessonJournal') }}",
+            type: "post",
+            data:j,            
+            enctype: 'multipart/form-data',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                $("#modalJournal").modal('hide');
+                $("#jid").val(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                alert("Image size is too big.")
+            }
+        });
+    }
 </script>
 
 
@@ -1481,7 +1631,7 @@ $(document).bind('cbox_closed', function(){
         if(activeTab){
             $('#nav-tab a[href="' + activeTab + '"]').tab('show');
         }
-      });
+      });      
 })(jQuery);
 </script>
 <!-- link for another tab -->
@@ -1518,7 +1668,56 @@ $(document).bind('cbox_closed', function(){
 <script>
 (function($) {
   "use strict";
-    tinymce.init({selector:'textarea'});
+  //  tinymce.init({selector:'textarea'});
+
+    tinymce.init({   
+            selector: 'textarea',    
+            //rtl_ui:true,
+            //directionality :"rtl",
+            height: 250,
+            menubar: 'edit view insert format tools table tc',
+            autosave_ask_before_unload: true,
+            autosave_interval: "30s",
+            autosave_prefix: "{path}{query}-{id}-",
+            autosave_restore_when_empty: false,
+            autosave_retention: "2m",
+           // image_advtab: true,
+  image_caption: true,
+  external_filemanager_path:"filemanager/",
+            plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks fullscreen',
+            'insertdatetime media table paste wordcount'
+            ],
+           //toolbar: 'imageupload | undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media  template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+            toolbar: 'imageupload | undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print |  a11ycheck ltr rtl | showcomments addcomment',
+            content_css: '//www.tiny.cloud/css/codepen.min.css'  ,
+        setup: function(editor) {
+            var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
+            $(editor.getElement()).parent().append(inp);
+
+            inp.on("change",function(){
+                var input = inp.get(0);
+                var file = input.files[0];
+                var fr = new FileReader();
+                fr.onload = function() {
+                    var img = new Image();
+                    img.src = fr.result;
+                    editor.insertContent('<img src="'+img.src+'"/>');
+                    inp.val('');
+                }
+                fr.readAsDataURL(file);
+            });
+
+            editor.addButton( 'imageupload', {
+                text:"IMAGE",
+                icon: false,
+                onclick: function(e) {
+                    inp.trigger('click');
+                }
+            });
+        }
+        });
 })(jQuery);
 </script>
 
