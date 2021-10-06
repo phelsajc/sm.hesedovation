@@ -13,6 +13,7 @@ class CustomSectionController extends Controller
 {
     public function Save(Request $request)
     {
+       //dd($request);exit;
         $getCat = '';
         if($request->cat){
             foreach ($request->cat as $key => $value) {
@@ -26,7 +27,7 @@ class CustomSectionController extends Controller
                 'created_dt' => date("Y-m-d H:i"),
                 'created_by' => Auth::user()->id,
                 'category' => $request->filterby,
-                'status' => $request->status,
+                'status' => $request->status=="true"?1:0,
             ]);
         }else{
             $c = new Custom_section;
@@ -34,8 +35,8 @@ class CustomSectionController extends Controller
             $c->display_by = substr($getCat, 0, -1);
             $c->created_by = Auth::user()->id;
             $c->created_dt = date("Y-m-d H:i");
-            $c->category =$request->filterby;
-            $c->status =$request->status;
+            $c->category = $request->filterby;
+            $c->status = $request->status=="true"?1:0;
             $c->save();
         }  
         return redirect('custom_section');

@@ -31,7 +31,7 @@
         
           <li class="{{ Nav::isRoute('admin.index') }}"><a href="{{route('admin.index')}}"><i class="flaticon-web-browser" aria-hidden="true"></i><span>{{ __('adminstaticword.Dashboard') }}</span></a></li>
 
-          <li class="{{ Nav::isRoute('user.index') }} {{ Nav::isRoute('user.add') }} {{ Nav::isRoute('user.edit') }}"><a href="{{route('user.index')}}"><i class="flaticon-user" aria-hidden="true"></i><span>{{ __('adminstaticword.Users') }}</span></a></li>
+          {{-- <li class="{{ Nav::isRoute('user.index') }} {{ Nav::isRoute('user.add') }} {{ Nav::isRoute('user.edit') }}"><a href="{{route('user.index')}}"><i class="flaticon-user" aria-hidden="true"></i><span>{{ __('adminstaticword.Users') }}</span></a></li> --}}
 
           @if(isset($zoom_enable) && $zoom_enable == 1)
           <li class="{{ Nav::isRoute('meeting.create') }} {{ Nav::isRoute('zoom.show') }} {{ Nav::isRoute('zoom.edit') }} {{ Nav::isRoute('zoom.setting') }} {{ Nav::isRoute('zoom.index') }} {{ Nav::isRoute('meeting.show') }} treeview">
@@ -69,7 +69,119 @@
           </li>
        @endif
 
-          <li class="{{ Nav::isResource('admin/country') }} {{ Nav::isResource('admin/state') }} {{ Nav::isResource('admin/city') }} treeview">
+          <li class="{{ Nav::isResource('user') }} {{ Nav::isRoute('show.lang') }} {{ Nav::isResource('admin/country') }} {{ Nav::isResource('admin/state') }} {{ Nav::isResource('admin/city') }} {{ Nav::isResource('currency') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Masterlist</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="{{ Nav::isResource('user') }}"><a href="{{route('user.index')}}"><i class="flaticon-user"></i><span>{{ __('adminstaticword.Users') }}</span></a></li>
+              <li class="{{ Nav::isResource('admin/country') }} {{ Nav::isResource('admin/state') }} {{ Nav::isResource('admin/city') }} treeview">
+                <a href="#">
+                  <i class="flaticon-location" aria-hidden="true"></i> <span>{{ __('adminstaticword.Location') }}</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li class="{{ Nav::isResource('admin/country') }}"><a href="{{url('admin/country')}}"><i class="flaticon-flag"></i>{{ __('adminstaticword.Country') }}</a></li>
+                  <li class="{{ Nav::isResource('admin/state') }}"><a href="{{url('admin/state')}}"><i class="flaticon-placeholder"></i>{{ __('adminstaticword.State') }}</a></li>
+                  <li class="{{ Nav::isResource('admin/city') }}"><a href="{{url('admin/city')}}"><i class="flaticon-home"></i>{{ __('adminstaticword.City') }}</a></li>
+                </ul>
+              </li>
+               <li class="{{ Nav::isResource('currency') }}"><a href="{{url('currency')}}"> <i class="flaticon-wallet"></i><span>{{ __('adminstaticword.Currency') }}</span></a></li>
+               <li class="{{ Nav::isRoute('show.lang') }}"><a href="{{route('show.lang')}}"><i class="flaticon-translation" aria-hidden="true"></i><span>{{ __('adminstaticword.Language') }}</span></a></li>
+            </ul>
+          </li>
+
+          <li class="{{ Nav::isRoute('instructor.settings') }} {{ Nav::isRoute('admin.instructor') }} {{ Nav::isRoute('admin.completed') }} {{ Nav::isRoute('all.instructor') }} {{ Nav::isResource('requestinstructor') }} {{ Nav::isRoute('allrequestinvolve') }} {{ Nav::isRoute('involve.request.index') }} {{ Nav::isRoute('involve.request') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Manage Instructors</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+               <li class="{{ Nav::isRoute('all.instructor') }} {{ Nav::isResource('requestinstructor') }} treeview">
+                <a href="#">
+                  <i class="flaticon-teacher" aria-hidden="true"></i> <span>{{ __('adminstaticword.Instructors') }}</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                   <li class="{{ Nav::isRoute('all.instructor') }}"><a href="{{route('all.instructor')}}"><i class="flaticon-customer"></i>{{ __('adminstaticword.AllInstructor') }}</a></li>
+                   <li class="{{ Nav::isResource('requestinstructor') }}"><a href="{{url('requestinstructor')}}"><i class="flaticon-graduation"></i>{{ __('adminstaticword.InstructorRequest') }}</a></li>
+                 </ul>
+               </li>
+               <li class="{{ Nav::isRoute('allrequestinvolve') }} {{ Nav::isRoute('involve.request.index') }} {{ Nav::isRoute('involve.request') }} treeview">
+                <a href="#">
+                  <i class="flaticon-test" aria-hidden="true"></i> <span>{{ __('adminstaticword.MultipleInstructor') }}</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('allrequestinvolve') }}"><a href="{{route('allrequestinvolve')}}"> <i class="flaticon-pending"></i>{{ __('adminstaticword.RequestToInvolve') }}</a></li>
+                  <li class="{{ Nav::isRoute('involve.request.index') }}"><a href="{{route('involve.request.index')}}"><i class="flaticon-question" aria-hidden="true"></i>{{ __('adminstaticword.InvolvementRequests') }}</a></li>
+                   <li class="{{ Nav::isRoute('involve.request') }}"><a href="{{route('involve.request')}}"><i class="flaticon-web-browser" aria-hidden="true"></i>{{ __('adminstaticword.InvolvedInCourse') }}</a></li>
+                </ul>
+               </li>
+               <li class="{{ Nav::isRoute('instructor.settings') }} {{ Nav::isRoute('admin.instructor') }} {{ Nav::isRoute('admin.completed') }}  treeview">
+                <a href="#">
+                  <i class="flaticon-payment" aria-hidden="true"></i> <span>{{ __('adminstaticword.InstructorPayout') }}</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                   <li class="{{ Nav::isRoute('instructor.settings') }}"><a href="{{route('instructor.settings')}}"><i class="flaticon-settings-3"></i>{{ __('adminstaticword.PayoutSettings') }}</a></li>
+                   <li class="{{ Nav::isRoute('admin.instructor') }}"><a href="{{route('admin.instructor')}}"><i class="flaticon-pending"></i>{{ __('adminstaticword.PendingPayout') }}</a></li>
+     
+                   <li class="{{ Nav::isRoute('admin.completed') }}"><a href="{{route('admin.completed')}}"><i class="flaticon-file"></i>{{ __('adminstaticword.CompletedPayout') }}</a></li>
+                 
+                 </ul>
+               </li>
+            </ul>
+          </li>
+
+          <li class="{{ Nav::isResource('order') }} {{ Nav::isResource('refundorder') }} {{ Nav::isResource('coupon') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Manage Order</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="{{ Nav::isResource('order') }}"><a href="{{url('order')}}"><i class="flaticon-shopping-cart" aria-hidden="true"></i><span>{{ __('adminstaticword.Order') }}</span></a></li>
+              <li class="{{ Nav::isResource('refundorder') }}"><a href="{{url('refundorder')}}"><i class="fa fa-spinner" aria-hidden="true"></i><span>{{ __('adminstaticword.RefundOrder') }}</span></a></li>
+              <li class="{{ Nav::isResource('coupon') }}"><a href="{{url('coupon')}}"><i class="flaticon-coupon" aria-hidden="true"></i><span>{{ __('adminstaticword.Coupon') }}</span></a></li>
+            </ul>
+          </li>
+
+          <li class="{{ Nav::isResource('custom_section') }} {{ Nav::isResource('slider') }} {{ Nav::isResource('facts') }} {{ Nav::isRoute('category.slider') }} {{ Nav::isResource('testimonial') }} {{ Nav::isResource('advertisement') }} {{ Nav::isResource('trusted') }} {{ Nav::isRoute('widget.setting') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Homepage Settings</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="{{ Nav::isResource('slider') }}"><a href="{{url('slider')}}"><i class="flaticon-slider-tool"></i><span>{{ __('adminstaticword.Slider') }}</span></a></li>
+              <li class="{{ Nav::isResource('facts') }}"><a href="{{url('facts')}}"><i class="flaticon-project-management"></i><span>{{ __('adminstaticword.FactsSlider') }}</span></a></li>
+              <li class="{{ Nav::isRoute('category.slider') }}"><a href="{{route('category.slider')}}"><i class="flaticon-interface"></i><span>{{ __('adminstaticword.CategorySlider') }}</span></a></li>
+              <li class="{{ Nav::isResource('getstarted') }}"><a href="{{url('getstarted')}}"><i class="flaticon-shuttle"></i>{{ __('adminstaticword.GetStarted') }}</a></li>
+              <li class="{{ Nav::isResource('testimonial') }}"><a href="{{url('testimonial')}}"><i class="flaticon-customer-1"></i>{{ __('adminstaticword.Testimonial') }}</a></li>
+              <li class="{{ Nav::isResource('advertisement') }}"><a href="{{url('advertisement')}}"><i class="fa fa-object-group" aria-hidden="true"></i>{{ __('adminstaticword.Advertisement') }}</a></li>
+              <li class="{{ Nav::isResource('trusted') }}"><a href="{{url('trusted')}}"><i class="flaticon-sliders"></i><span>{{ __('adminstaticword.TrustedSlider') }}</span></a></li>
+              <li class="{{ Nav::isRoute('widget.setting') }}"><a href="{{route('widget.setting')}}"><i class="flaticon-real-state"></i>{{ __('adminstaticword.WidgetSetting') }}</a></li>
+              <li class="{{ Nav::isResource('custom_section') }}"><a href="{{url('custom_section')}}" title="Custom Sections"><span><i class="fa fa-puzzle-piece"></i>&emsp;Custom Sections</span></a></li>
+            </ul>
+          </li>
+
+          {{-- <li class="{{ Nav::isResource('admin/country') }} {{ Nav::isResource('admin/state') }} {{ Nav::isResource('admin/city') }} treeview">
             <a href="#">
               <i class="flaticon-location" aria-hidden="true"></i> <span>{{ __('adminstaticword.Location') }}</span>
               <span class="pull-right-container">
@@ -81,12 +193,12 @@
               <li class="{{ Nav::isResource('admin/state') }}"><a href="{{url('admin/state')}}"><i class="flaticon-placeholder"></i>{{ __('adminstaticword.State') }}</a></li>
               <li class="{{ Nav::isResource('admin/city') }}"><a href="{{url('admin/city')}}"><i class="flaticon-home"></i>{{ __('adminstaticword.City') }}</a></li>
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isResource('currency') }}"><a href="{{url('currency')}}"> <i class="flaticon-wallet"></i><span>{{ __('adminstaticword.Currency') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('currency') }}"><a href="{{url('currency')}}"> <i class="flaticon-wallet"></i><span>{{ __('adminstaticword.Currency') }}</span></a></li> --}}
          
 
-          <li class="{{ Nav::isResource('category') }} {{ Nav::isResource('subcategory') }} {{ Nav::isResource('childcategory') }} {{ Nav::isResource('course') }} {{ Nav::isResource('bundle') }} {{ Nav::isResource('courselang') }} treeview">
+          <li class="{{ Nav::isResource('batch') }} {{ Nav::isResource('bundle') }} {{ Nav::isResource('course') }} {{ Nav::isResource('coursereview') }} {{ Nav::isResource('announcement_instructor') }} isResource('bundle') }} {{ Nav::isResource('category') }} {{ Nav::isResource('subcategory') }} {{ Nav::isResource('childcategory') }} {{ Nav::isResource('courselang') }} {{ Nav::isResource('coursereview') }} {{ Nav::isRoute('assignment.view') }} {{ Nav::isResource('refundpolicy') }} treeview">
             <a href="#">
                 <i class="flaticon-browser-1"></i>{{ __('adminstaticword.Course') }}
                 <i class="fa fa-angle-left pull-right"></i>
@@ -97,7 +209,7 @@
                   <a href="#"><i class="flaticon-interface" aria-hidden="true"></i>{{ __('adminstaticword.Category') }}<i class="fa fa-angle-left pull-right"></i></a>
                   
                   <ul class="treeview-menu">
-                    <li class="{{ Nav::isResource('category') }}"><a href="{{url('category')}}"><i class="flaticon-rec"></i>{{ __('adminstaticword.Category') }}</a></li>
+                    <li class="{{ Nav::isResource('category') }}"><a href="{{url('category')}}"><i class="flaticon-rec"></i>Featured {{ __('adminstaticword.Category') }}</a></li>
                     <li class="{{ Nav::isResource('subcategory') }}"><a href="{{url('subcategory')}}"><i class="flaticon-rec"></i>{{ __('adminstaticword.SubCategory') }}</a></li>
                     <li class="{{ Nav::isResource('childcategory') }}"><a href="{{url('childcategory')}}"><i class="flaticon-rec"></i>{{ __('adminstaticword.ChildCategory') }}</a></li>
                   </ul>
@@ -121,7 +233,183 @@
             </ul>
           </li>
 
-          <li class="{{ Nav::isRoute('allrequestinvolve') }} {{ Nav::isRoute('involve.request.index') }} {{ Nav::isRoute('involve.request') }} treeview">
+          <li class="{{ Nav::isRoute('gen.set') }}  {{ Nav::isResource('faqinstructor') }} {{ Nav::isResource('faq') }} {{ Nav::isResource('usermessage') }} {{ Nav::isRoute('policy') }} {{ Nav::isRoute('about.page') }} {{ Nav::isRoute('careers.page') }} {{ Nav::isResource('blog') }} {{ Nav::isRoute('termscondition') }} treeview">
+            <a href="#">
+              <i class="flaticon-tools" aria-hidden="true"></i> <span>{{ __('adminstaticword.SiteSetting') }}</span>
+               <span class="pull-right-container">
+                 <i class="fa fa-angle-left pull-right"></i>
+               </span>
+             </a>
+             <ul class="treeview-menu">
+               <li class="{{ Nav::isRoute('gen.set') }}"><a href="{{route('gen.set')}}"><i class="flaticon-admin"></i><span>General {{ __('adminstaticword.Setting') }}</span></a></li>
+               <li class="{{ Nav::isRoute('about.page') }}"><a href="{{route('about.page')}}"><i class="flaticon-book"></i>{{ __('adminstaticword.About') }} Us</a></li>
+               <li class="{{ Nav::isRoute('careers.page') }}"><a href="{{route('careers.page')}}"><i class="flaticon-mobile-marketing"></i>{{ __('adminstaticword.Career') }}</a></li>
+               <li class="{{ Nav::isResource('blog') }}"><a href="{{url('blog')}}"><i class="flaticon-real-state"></i>{{ __('adminstaticword.Blog') }}</a></li>
+               <li class="{{ Nav::isRoute('termscondition') }}"><a href="{{route('termscondition')}}"><i class="flaticon-terms-and-conditions"></i>{{ __('adminstaticword.Terms&Condition') }} </a></li>
+               <li class="{{ Nav::isRoute('policy') }}"><a href="{{route('policy')}}"><i class="flaticon-smartphone"></i> {{ __('adminstaticword.PrivacyPolicy') }}</a></li>
+               <li class="{{ Nav::isResource('usermessage') }}"><a href="{{url('usermessage')}}"><i class="flaticon-phone-book" aria-hidden="true"></i><span>{{ __('adminstaticword.ContactUs') }}</span></a></li>
+                <li class="{{ Nav::isResource('faq') }} {{ Nav::isResource('faqinstructor') }}  treeview">
+                 <a href="#">
+                   <i class="flaticon-faq" aria-hidden="true"></i> <span>{{ __('adminstaticword.Faq') }}</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li class="{{ Nav::isResource('faq') }}"><a href="{{url('faq')}}"><i class="flaticon-chat"></i>{{ __('adminstaticword.FaqStudent') }}</a></li>
+                    <li class="{{ Nav::isResource('faqinstructor') }}"><a href="{{url('faqinstructor')}}"><i class="flaticon-question"></i>{{ __('adminstaticword.FaqInstructor') }}</a></li>
+                  </ul>
+                </li>
+               
+               {{-- <li class="{{ Nav::isRoute('gen.set') }}"><a href="{{route('gen.set')}}"><i class="flaticon-admin"></i><span>{{ __('adminstaticword.Setting') }}</span></a></li>
+               <li class="{{ Nav::isRoute('api.setApiView') }}"><a href="{{route('api.setApiView')}}"><i class="flaticon-report"></i>{{ __('adminstaticword.APISetting') }}</a></li>
+               
+               <li class="{{ Nav::isRoute('comingsoon.page') }}"><a href="{{route('comingsoon.page')}}"><i class="flaticon-fast-time"></i>{{ __('adminstaticword.ComingSoon') }}</a></li>
+ 
+               <li class="{{ Nav::isRoute('bank.transfer') }}"><a href="{{route('bank.transfer')}}"><i class="flaticon-bank"></i> {{ __('adminstaticword.BankDetails') }}</a></li>
+ 
+               <li class="{{ Nav::isRoute('show.pwa') }}"><a href="{{route('show.pwa')}}"><i class="flaticon-mobile-marketing" aria-hidden="true"></i><span> {{ __('adminstaticword.PWASetting') }}</span></a></li>
+               <li class="{{ Nav::isRoute('adsense') }}"><a href="{{url('/admin/adsensesetting')}}" title="Adsense Setting"><span><i class="flaticon-settings-3"></i> {{ __('adminstaticword.AdsenseSetting') }}</span></a></li>
+               
+               @if(isset($gsetting) && $gsetting->ipblock_enable == 1)
+               <li class="{{ Nav::isRoute('ipblock.view') }}"><a href="{{url('admin/ipblock')}}" title="IPBlock Setting"><span><i class="flaticon-error"></i> {{ __('adminstaticword.IPBlockSettings') }}</span></a></li>
+               @endif
+ 
+ 
+               <li class="{{ Nav::isRoute('whatsapp.button') }}"><a href="{{route('whatsapp.button')}}" title="Whatsapp Button Setting"><span><i class="fa fa-comment-o" aria-hidden="true"></i>&emsp; {{ __('adminstaticword.WhatsappButtonSetting') }}</span></a></li>
+ 
+               <li class="{{ Nav::isRoute('admin/coloroption') }}"><a href="{{url('admin/coloroption')}}" title="Color Options"><span><i class="fa fa-cube" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ColorSettings') }}</span></a></li>
+ 
+               <li class="{{ Nav::isResource('manualpayment') }}"><a href="{{url('manualpayment')}}" title="Manual Payment Gateway"><span><i class="fa fa-file" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ManualPaymentGateway') }}</span></a></li>
+              
+ 
+               <li class="{{ Nav::isResource('custom_section') }}"><a href="{{url('custom_section')}}" title="Custom Sections"><span><i class="fa fa-puzzle-piece"></i>&emsp;Custom Sections</span></a></li>
+               <li class="{{ Nav::isResource('deleted_messages') }}"><a href="{{url('deleted_messages')}}" title="Deleted Messages"><span><i class="fa fa-puzzle-piece"></i>&emsp;Delete Messages</span></a></li> --}}
+ 
+             </ul>
+           </li>
+
+          
+           <li class="{{ Nav::isResource('announcement_instructor') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Communications</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class=""><a href="{{url('announcement_instructor')}}"><i class="fa fa-clone" aria-hidden="true"></i><span>Announcement</span></a></li>
+            </ul>
+           </li>
+
+           <li class="{{ Nav::isRoute('import.view') }} {{ Nav::isRoute('show.sitemap') }} {{ Nav::isRoute('database.backup') }} {{ Nav::isRoute('update.process') }} {{ Nav::isRoute('api.setApiView') }} {{ Nav::isRoute('get.api.key') }} {{ Nav::isRoute('show.pwa') }} {{ Nav::isRoute('whatsapp.button') }} {{ Nav::isRoute('em_set') }} {{ Nav::isRoute('se_set') }} {{ Nav::isRoute('sl_set') }} {{ Nav::isResource('page') }} {{ Nav::isRoute('comingsoon.page') }} {{ Nav::isResource('manualpayment') }} {{ Nav::isRoute('adsense') }} {{ Nav::isResource('deleted_messages') }} {{ Nav::isRoute('bank.transfer') }} {{ Nav::isRoute('cs_set') }} {{ Nav::isRoute('coloroption.view') }} treeview">
+            <a href="#">
+              <i class="flaticon-location" aria-hidden="true"></i> <span>Developers Settings</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="{{ Nav::isRoute('show.sitemap') }}"><a href="{{route('show.sitemap')}}"><i class="flaticon-location" aria-hidden="true"></i><span>{{ __('adminstaticword.SiteMap') }}</span></a></li>
+              <li class="{{ Nav::isResource('page') }} {{ Nav::isRoute('comingsoon.page') }} {{ Nav::isResource('deleted_messages') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Pages</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isResource('page') }}"><a href="{{url('page')}}"><i class="flaticon-computer" aria-hidden="true"></i><span>{{ __('adminstaticword.Pages') }}</span></a></li>
+                  <li class="{{ Nav::isRoute('comingsoon.page') }}"><a href="{{route('comingsoon.page')}}"><i class="flaticon-fast-time"></i>{{ __('adminstaticword.ComingSoon') }}</a></li>
+                  <li class="{{ Nav::isResource('deleted_messages') }}"><a href="{{url('deleted_messages')}}" title="Deleted Messages"><span><i class="fa fa-puzzle-piece"></i>&emsp;Delete Messages</span></a></li>
+                </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('cs_set') }} {{ Nav::isRoute('coloroption.view') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Styling</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('cs_set') }}"><a href="{{route('cs_set')}}"><i class="flaticon-fast-time"></i>Custom Style and JS</a></li>
+                  <li class="{{ Nav::isRoute('coloroption.view') }}"><a href="{{url('admin/coloroption')}}" title="Color Options"><span><i class="fa fa-cube" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ColorSettings') }}</span></a></li>
+                </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('bank.transfer') }} {{ Nav::isResource('manualpayment') }}{{ Nav::isRoute('adsense') }}  treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Payment</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('bank.transfer') }}"><a href="{{route('bank.transfer')}}"><i class="flaticon-bank"></i> {{ __('adminstaticword.BankDetails') }}</a></li>
+                  <li class="{{ Nav::isResource('manualpayment') }}"><a href="{{url('manualpayment')}}" title="Manual Payment Gateway"><span><i class="fa fa-file" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ManualPaymentGateway') }}</span></a></li>
+                  <li class="{{ Nav::isRoute('adsense') }}"><a href="{{url('/admin/adsensesetting')}}" title="Adsense Setting"><span><i class="flaticon-settings-3"></i> {{ __('adminstaticword.AdsenseSetting') }}</span></a></li>
+                </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('em_set') }} {{ Nav::isRoute('se_set') }} {{ Nav::isRoute('sl_set') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Social</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('em_set') }}"><a href="{{route('em_set')}}"><i class="flaticon-bank"></i> Mail</a></li>
+                  <li class="{{ Nav::isRoute('se_set') }}"><a href="{{route('se_set')}}"><i class="flaticon-bank"></i> SEO</a></li>
+                  <li class="{{ Nav::isRoute('sl_set') }}"><a href="{{route('sl_set')}}"><i class="flaticon-bank"></i> Socal Login</a></li>
+                 </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('show.pwa') }} {{ Nav::isRoute('whatsapp.button') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Mobile</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('show.pwa') }}"><a href="{{route('show.pwa')}}"><i class="flaticon-mobile-marketing" aria-hidden="true"></i><span> {{ __('adminstaticword.PWASetting') }}</span></a></li>
+                  <li class="{{ Nav::isRoute('whatsapp.button') }}"><a href="{{route('whatsapp.button')}}" title="Whatsapp Button Setting"><span><i class="fa fa-comment-o" aria-hidden="true"></i>&emsp; {{ __('adminstaticword.WhatsappButtonSetting') }}</span></a></li>
+                 </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('api.setApiView') }} {{ Nav::isRoute('get.api.key') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>API</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('api.setApiView') }}"><a href="{{route('api.setApiView')}}"><i class="flaticon-report"></i>{{ __('adminstaticword.APISetting') }}</a></li>
+                  <li class="{{ Nav::isRoute('get.api.key') }}"><a href="{{route('get.api.key')}}"><i class="flaticon-test" aria-hidden="true"></i><span>{{ __('adminstaticword.GetAPIKeys') }}</span></a></li>
+                 </ul>
+              </li>
+
+              <li class="{{ Nav::isRoute('import.view') }} {{ Nav::isRoute('database.backup') }} {{ Nav::isRoute('update.process') }} treeview">
+                <a href="#">
+                  <i class="flaticon-faq" aria-hidden="true"></i> <span>Data</span>
+                   <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                 </a>
+                 <ul class="treeview-menu">
+                  <li class="{{ Nav::isRoute('import.view') }}"><a href="{{route('import.view')}}"><i class="fa fa-crosshairs"></i> {{ __('adminstaticword.ImportDemo') }}</a></li>
+                  <li class="{{ Nav::isRoute('database.backup') }}"><a href="{{route('database.backup')}}"><i class="fa fa-ioxhost"></i> {{ __('adminstaticword.DatabaseBackup') }}</a></li>
+                  <li class="{{ Nav::isRoute('update.process') }}"><a href="{{route('update.process')}}"><i class="flaticon-project-management" aria-hidden="true"></i><span>{{ __('adminstaticword.UpdateProcess') }}</span></a></li>
+                 </ul>
+              </li>
+
+            </ul>
+          </li>
+
+          {{-- <li class="{{ Nav::isRoute('allrequestinvolve') }} {{ Nav::isRoute('involve.request.index') }} {{ Nav::isRoute('involve.request') }} treeview">
             <a href="#">
               <i class="flaticon-test" aria-hidden="true"></i> <span>{{ __('adminstaticword.MultipleInstructor') }}</span>
               <span class="pull-right-container">
@@ -133,11 +421,11 @@
               <li class="{{ Nav::isRoute('involve.request.index') }}"><a href="{{route('involve.request.index')}}"><i class="flaticon-question" aria-hidden="true"></i>{{ __('adminstaticword.InvolvementRequests') }}</a></li>
                <li class="{{ Nav::isRoute('involve.request') }}"><a href="{{route('involve.request')}}"><i class="flaticon-web-browser" aria-hidden="true"></i>{{ __('adminstaticword.InvolvedInCourse') }}</a></li>
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isResource('coupon') }}"><a href="{{url('coupon')}}"><i class="flaticon-coupon" aria-hidden="true"></i><span>{{ __('adminstaticword.Coupon') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('coupon') }}"><a href="{{url('coupon')}}"><i class="flaticon-coupon" aria-hidden="true"></i><span>{{ __('adminstaticword.Coupon') }}</span></a></li> --}}
 
-          <li class="{{ Nav::isRoute('all.instructor') }} {{ Nav::isResource('requestinstructor') }} treeview">
+          {{-- <li class="{{ Nav::isRoute('all.instructor') }} {{ Nav::isResource('requestinstructor') }} treeview">
            <a href="#">
              <i class="flaticon-teacher" aria-hidden="true"></i> <span>{{ __('adminstaticword.Instructors') }}</span>
               <span class="pull-right-container">
@@ -148,16 +436,16 @@
               <li class="{{ Nav::isRoute('all.instructor') }}"><a href="{{route('all.instructor')}}"><i class="flaticon-customer"></i>{{ __('adminstaticword.AllInstructor') }}</a></li>
               <li class="{{ Nav::isResource('requestinstructor') }}"><a href="{{url('requestinstructor')}}"><i class="flaticon-graduation"></i>{{ __('adminstaticword.InstructorRequest') }}</a></li>
             </ul>
-          </li>
+          </li> --}}
           
 
-          <li class="{{ Nav::isResource('order') }}"><a href="{{url('order')}}"><i class="flaticon-shopping-cart" aria-hidden="true"></i><span>{{ __('adminstaticword.Order') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('order') }}"><a href="{{url('order')}}"><i class="flaticon-shopping-cart" aria-hidden="true"></i><span>{{ __('adminstaticword.Order') }}</span></a></li> --}}
 
-          <li class="{{ Nav::isResource('refundorder') }}"><a href="{{url('refundorder')}}"><i class="fa fa-spinner" aria-hidden="true"></i><span>{{ __('adminstaticword.RefundOrder') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('refundorder') }}"><a href="{{url('refundorder')}}"><i class="fa fa-spinner" aria-hidden="true"></i><span>{{ __('adminstaticword.RefundOrder') }}</span></a></li> --}}
     
-          <li class="{{ Nav::isResource('page') }}"><a href="{{url('page')}}"><i class="flaticon-computer" aria-hidden="true"></i><span>{{ __('adminstaticword.Pages') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('page') }}"><a href="{{url('page')}}"><i class="flaticon-computer" aria-hidden="true"></i><span>{{ __('adminstaticword.Pages') }}</span></a></li> --}}
 
-          <li class="{{ Nav::isResource('faq') }} {{ Nav::isResource('faqinstructor') }}  treeview">
+          {{-- <li class="{{ Nav::isResource('faq') }} {{ Nav::isResource('faqinstructor') }}  treeview">
            <a href="#">
              <i class="flaticon-faq" aria-hidden="true"></i> <span>{{ __('adminstaticword.Faq') }}</span>
               <span class="pull-right-container">
@@ -168,9 +456,9 @@
               <li class="{{ Nav::isResource('faq') }}"><a href="{{url('faq')}}"><i class="flaticon-chat"></i>{{ __('adminstaticword.FaqStudent') }}</a></li>
               <li class="{{ Nav::isResource('faqinstructor') }}"><a href="{{url('faqinstructor')}}"><i class="flaticon-question"></i>{{ __('adminstaticword.FaqInstructor') }}</a></li>
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isRoute('instructor.settings') }} {{ Nav::isRoute('admin.instructor') }} {{ Nav::isRoute('admin.completed') }}  treeview">
+          {{-- <li class="{{ Nav::isRoute('instructor.settings') }} {{ Nav::isRoute('admin.instructor') }} {{ Nav::isRoute('admin.completed') }}  treeview">
            <a href="#">
              <i class="flaticon-payment" aria-hidden="true"></i> <span>{{ __('adminstaticword.InstructorPayout') }}</span>
               <span class="pull-right-container">
@@ -184,9 +472,9 @@
               <li class="{{ Nav::isRoute('admin.completed') }}"><a href="{{route('admin.completed')}}"><i class="flaticon-file"></i>{{ __('adminstaticword.CompletedPayout') }}</a></li>
             
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isResource('user/course/report') }}  treeview">
+          {{-- <li class="{{ Nav::isResource('user/course/report') }}  treeview">
            <a href="#">
              <i class="flaticon-flag" aria-hidden="true"></i> <span>{{ __('adminstaticword.Report') }}</span>
               <span class="pull-right-container">
@@ -197,9 +485,9 @@
               <li class="{{ Nav::isResource('user/course/report') }}"><a href="{{url('user/course/report')}}"><i class="flaticon-error"></i><span>{{ __('adminstaticword.Report') }} Course</span></a></li>
               <li class="{{ Nav::isResource('user/question/report') }}"><a href="{{url('user/question/report')}}"><i class="flaticon-question-mark"></i><span>{{ __('adminstaticword.Report') }} Question</span></a></li>
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isResource('slider') }} {{ Nav::isResource('facts') }} {{ Nav::isRoute('category.slider') }} {{ Nav::isResource('getstarted') }} {{ Nav::isResource('trusted') }} {{ Nav::isRoute('widget.setting') }} {{ Nav::isRoute('terms') }} {{ Nav::isResource('testimonial') }} treeview">
+          {{-- <li class="{{ Nav::isResource('slider') }} {{ Nav::isResource('facts') }} {{ Nav::isRoute('category.slider') }} {{ Nav::isResource('getstarted') }} {{ Nav::isResource('trusted') }} {{ Nav::isRoute('widget.setting') }} {{ Nav::isRoute('terms') }} {{ Nav::isResource('testimonial') }} treeview">
            <a href="#">
              <i class="flaticon-optimization" aria-hidden="true"></i> <span>{{ __('adminstaticword.FrontSetting') }}</span>
               <span class="pull-right-container">
@@ -219,50 +507,11 @@
 
               
             </ul>
-          </li>
+          </li> --}}
           
-          <li class="{{ Nav::isRoute('gen.set') }} {{ Nav::isRoute('api.setApiView') }} {{ Nav::isResource('blog') }} {{ Nav::isRoute('about.page') }} {{ Nav::isRoute('careers.page') }} {{ Nav::isRoute('comingsoon.page') }} {{ Nav::isRoute('termscondition') }} {{ Nav::isRoute('policy') }} {{ Nav::isRoute('bank.transfer') }} {{ Nav::isRoute('show.pwa') }} {{ Nav::isRoute('adsense') }} {{ Nav::isRoute('ipblock.view') }} {{ Nav::isRoute('whatsapp.button') }} {{ Nav::isRoute('admin/coloroption') }} treeview">
-           <a href="#">
-             <i class="flaticon-tools" aria-hidden="true"></i> <span>{{ __('adminstaticword.SiteSetting') }}</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li class="{{ Nav::isRoute('gen.set') }}"><a href="{{route('gen.set')}}"><i class="flaticon-admin"></i><span>{{ __('adminstaticword.Setting') }}</span></a></li>
-              <li class="{{ Nav::isRoute('api.setApiView') }}"><a href="{{route('api.setApiView')}}"><i class="flaticon-report"></i>{{ __('adminstaticword.APISetting') }}</a></li>
-              
-              <li class="{{ Nav::isResource('blog') }}"><a href="{{url('blog')}}"><i class="flaticon-real-state"></i>{{ __('adminstaticword.Blog') }}</a></li>
-              <li class="{{ Nav::isRoute('about.page') }}"><a href="{{route('about.page')}}"><i class="flaticon-book"></i>{{ __('adminstaticword.About') }}</a></li>
-              <li class="{{ Nav::isRoute('careers.page') }}"><a href="{{route('careers.page')}}"><i class="flaticon-mobile-marketing"></i>{{ __('adminstaticword.Career') }}</a></li>
-              <li class="{{ Nav::isRoute('comingsoon.page') }}"><a href="{{route('comingsoon.page')}}"><i class="flaticon-fast-time"></i>{{ __('adminstaticword.ComingSoon') }}</a></li>
-              <li class="{{ Nav::isRoute('termscondition') }}"><a href="{{route('termscondition')}}"><i class="flaticon-terms-and-conditions"></i>{{ __('adminstaticword.Terms&Condition') }} </a></li>
-              <li class="{{ Nav::isRoute('policy') }}"><a href="{{route('policy')}}"><i class="flaticon-smartphone"></i> {{ __('adminstaticword.PrivacyPolicy') }}</a></li>
+          
 
-              <li class="{{ Nav::isRoute('bank.transfer') }}"><a href="{{route('bank.transfer')}}"><i class="flaticon-bank"></i> {{ __('adminstaticword.BankDetails') }}</a></li>
-
-              <li class="{{ Nav::isRoute('show.pwa') }}"><a href="{{route('show.pwa')}}"><i class="flaticon-mobile-marketing" aria-hidden="true"></i><span> {{ __('adminstaticword.PWASetting') }}</span></a></li>
-              <li class="{{ Nav::isRoute('adsense') }}"><a href="{{url('/admin/adsensesetting')}}" title="Adsense Setting"><span><i class="flaticon-settings-3"></i> {{ __('adminstaticword.AdsenseSetting') }}</span></a></li>
-              
-              @if(isset($gsetting) && $gsetting->ipblock_enable == 1)
-              <li class="{{ Nav::isRoute('ipblock.view') }}"><a href="{{url('admin/ipblock')}}" title="IPBlock Setting"><span><i class="flaticon-error"></i> {{ __('adminstaticword.IPBlockSettings') }}</span></a></li>
-              @endif
-
-
-              <li class="{{ Nav::isRoute('whatsapp.button') }}"><a href="{{route('whatsapp.button')}}" title="Whatsapp Button Setting"><span><i class="fa fa-comment-o" aria-hidden="true"></i>&emsp; {{ __('adminstaticword.WhatsappButtonSetting') }}</span></a></li>
-
-              <li class="{{ Nav::isRoute('admin/coloroption') }}"><a href="{{url('admin/coloroption')}}" title="Color Options"><span><i class="fa fa-cube" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ColorSettings') }}</span></a></li>
-
-              <li class="{{ Nav::isResource('manualpayment') }}"><a href="{{url('manualpayment')}}" title="Manual Payment Gateway"><span><i class="fa fa-file" aria-hidden="true"></i>&emsp;{{ __('adminstaticword.ManualPaymentGateway') }}</span></a></li>
-             
-
-              <li class="{{ Nav::isResource('custom_section') }}"><a href="{{url('custom_section')}}" title="Custom Sections"><span><i class="fa fa-puzzle-piece"></i>&emsp;Custom Sections</span></a></li>
-              <li class="{{ Nav::isResource('deleted_messages') }}"><a href="{{url('deleted_messages')}}" title="Deleted Messages"><span><i class="fa fa-puzzle-piece"></i>&emsp;Delete Messages</span></a></li>
-
-            </ul>
-          </li>
-
-          <li class="{{ Nav::isRoute('player.set') }} {{ Nav::isRoute('ads') }} {{ Nav::isRoute('ad.setting') }} treeview">
+          {{-- <li class="{{ Nav::isRoute('player.set') }} {{ Nav::isRoute('ads') }} {{ Nav::isRoute('ad.setting') }} treeview">
            <a href="#">
              <i class="flaticon-video" aria-hidden="true"></i> <span>{{ __('adminstaticword.PlayerSettings') }}</span>
               <span class="pull-right-container">
@@ -280,19 +529,19 @@
               @endif
 
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="{{ Nav::isRoute('show.lang') }}"><a href="{{route('show.lang')}}"><i class="flaticon-translation" aria-hidden="true"></i><span>{{ __('adminstaticword.Language') }}</span></a></li>
+          {{-- <li class="{{ Nav::isRoute('show.lang') }}"><a href="{{route('show.lang')}}"><i class="flaticon-translation" aria-hidden="true"></i><span>{{ __('adminstaticword.Language') }}</span></a></li> --}}
 
-          <li class="{{ Nav::isResource('usermessage') }}"><a href="{{url('usermessage')}}"><i class="flaticon-phone-book" aria-hidden="true"></i><span>{{ __('adminstaticword.ContactUs') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('usermessage') }}"><a href="{{url('usermessage')}}"><i class="flaticon-phone-book" aria-hidden="true"></i><span>{{ __('adminstaticword.ContactUs') }}</span></a></li> --}}
 
 
-          <li class="{{ Nav::isResource('show.sitemap') }}"><a href="{{route('show.sitemap')}}"><i class="flaticon-location" aria-hidden="true"></i><span>{{ __('adminstaticword.SiteMap') }}</span></a></li>
+          {{-- <li class="{{ Nav::isResource('show.sitemap') }}"><a href="{{route('show.sitemap')}}"><i class="flaticon-location" aria-hidden="true"></i><span>{{ __('adminstaticword.SiteMap') }}</span></a></li> --}}
           
 
-          <li class="{{ Nav::isRoute('get.api.key') }}"><a href="{{route('get.api.key')}}"><i class="flaticon-test" aria-hidden="true"></i><span>{{ __('adminstaticword.GetAPIKeys') }}</span></a></li>
+         {{--  <li class="{{ Nav::isRoute('get.api.key') }}"><a href="{{route('get.api.key')}}"><i class="flaticon-test" aria-hidden="true"></i><span>{{ __('adminstaticword.GetAPIKeys') }}</span></a></li> --}}
 
-          <li class="{{ Nav::isRoute('import.view') }} {{ Nav::isRoute('database.backup') }} {{ Nav::isRoute('update.process') }} treeview">
+          {{-- <li class="{{ Nav::isRoute('import.view') }} {{ Nav::isRoute('database.backup') }} {{ Nav::isRoute('update.process') }} treeview">
            <a href="#">
              <i class="flaticon-faq" aria-hidden="true"></i> <span>{{ __('adminstaticword.Help&Support') }}</span>
               <span class="pull-right-container">
@@ -307,11 +556,11 @@
               <li class="{{ Nav::isRoute('update.process') }}"><a href="{{route('update.process')}}"><i class="flaticon-project-management" aria-hidden="true"></i><span>{{ __('adminstaticword.UpdateProcess') }}</span></a></li>
 
             </ul>
-          </li>
+          </li> --}}
 
           {{-- <li class="{{ Nav::isRoute('clear-cache') }}"><a href="{{url('clear-cache')}}"><i class="fa fa-clone" aria-hidden="true"></i><span>{{ __('adminstaticword.ClearCache') }}</span></a></li> --}}
           
-          <li class=""><a href="{{url('announcement_instructor')}}"><i class="fa fa-clone" aria-hidden="true"></i><span>Announcement</span></a></li>
+          
           {{-- <li class="{{ Nav::isResource('progressPage') }}"><a href="{{url('progressPage')}}"><i class="flaticon-personal-information"></i>Progress</a></li> --}}
         </ul>
       @endif

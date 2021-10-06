@@ -1,15 +1,17 @@
 @php
     $cats= App\Categories::find($cate);
+    //->inRandomOrder()->take(12)->
 @endphp
 
 
 <div class="row no-gutters">
-    @foreach($cats->courses->where('status', '7')->sortByDesc('id')->take(4) as $c)
+    @foreach($cats->courses->where('status', '7')->sortByDesc('id')->take(12) as $c)
     @if($c->status == 7 && $c->isarchive == 0)
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="item immi-slider-block development">
-                <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}">
-                    <div class="view-block">
+                {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}"> --}}
+                <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}">
+                        <div class="view-block">
                         <div class="view-img">
                             @if($c['preview_image'] !== NULL && $c['preview_image'] !== '')
                                 <a href="{{ route('user.course.show',['id' => $c->id, 'slug' => $c->slug ]) }}"><img src="{{ asset('images/course/'.$c['preview_image']) }}" alt="course" class="img-fluid" >

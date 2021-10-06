@@ -110,7 +110,7 @@
                                <input class="tgl tgl-skewed" id="cb10" type="checkbox" checked onchange="changeStatus(this.checked)">
                                <label class="tgl-btn" data-tg-off="Deactive" data-tg-on="Active" for="cb10"></label>
                              </li>
-                             <input type="hidden" name="status"  id="j">
+                             <input type="hidden" name="status" value="true" id="status">
                            </div>
                           </div>
 
@@ -121,20 +121,20 @@
                                 <div class="form-group"> 
                                     <label for="exampleInputDetails">Course Filter By :<sup class="redstar">*</sup></label>
                                     <select name="filterby" id="filterby" class="form-control" onchange="filter_by(this.value)">
-                                      <option value="1">Categroy</option>
+                                      {{-- <option value="1">Category</option> --}}
                                       <option value="2">Free</option>
                                       <option value="3">Discounted</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="catDiv">
+                            {{-- <div class="col-md-6" id="catDiv">
                                 <div class="form-group"> 
                                     <label for="exampleInputDetails">Course Filter By :<sup class="redstar">*</sup></label>
                                     <select name="cat[]" id="cat" class="form-control" multiple>
                                       
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                           </div>
                         </div>
                     </div>
@@ -206,6 +206,13 @@
               $("#cat option[value='" + e + "']").prop("selected", true);
           });
           filter_by(response.category)
+          $("#status").val(response.status)
+          if(response.status==1){
+            $("#cb10").attr("checked",true)
+          }else{
+            $("#cb10").attr("checked",false)
+          }
+          
         }
       });      
     }

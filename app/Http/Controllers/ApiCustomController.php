@@ -33,7 +33,8 @@ class ApiCustomController extends Controller
         if($checkJournal){
             CourseJournal::where(['id' => $request->jid])->update([
                 'content' => $request->content,        
-                'update_dt' => time(),
+                'update_dt' => time(),                
+                'isdraft' => $request->isdraft
             ]);
             echo $request->jid; 
         }else{
@@ -42,10 +43,22 @@ class ApiCustomController extends Controller
             $c->class_id = $request->lid;
             $c->user_id = Auth::user()->id;
             $c->course_id = $request->cid;
+            $c->isdraft = $request->isdraft;
             $c->created_dt = date("Y-m-d H:i");
             $c->save();
             echo $c->id; 
         }        
+    }
+
+    public function check_journal(Request $request)
+    {
+        CourseJournal::where(['id' => $request->id])->update([
+            'checked_dt' => date("Y-m-d H:i"),        
+            'checked_by' => Auth::user()->id,                
+            'checked_status' => $request->status,
+            'checked_remarks' => $request->remark
+        ]);
+        echo true; 
     }
 
     public function view_journal($id)
@@ -88,7 +101,7 @@ class ApiCustomController extends Controller
 
     public function studentClassProgress($id,$uid)
     {  
-        $course_journal = CourseJournal::where(['course_id'=>$id,'user_id'=>$uid])->first();
+        $course_journal = CourseJournal::where(['course_id'=>$id,'user_id'=>$uid])->get();
         $quiz_topic = QuizTopic::where(['course_id'=>$id])->get();        
         $user_info = User::where(['id'=>$uid])->first();
         $topics=QuizTopic::where('id',$id)->first();

@@ -43,6 +43,7 @@ use Artesaos\SEOTools\Facades\OpenGraph;
 use App\Groups;
 use App\GroupMembers;
 use App\Mail\CourseCreate;
+use App\CourseLessonProgress;
 use Mail;
 
 class CourseController extends Controller
@@ -634,6 +635,10 @@ class CourseController extends Controller
       $coursechapters = CourseChapter::where('course_id','=',$id)->orderBy('position','ASC')->get();
       $coursequestions = Question::where('course_id','=',$id)->get();
       $courseclass= CourseClass::get();
+      $get_courseclass_by_cid= CourseClass::where(['course_id'=>$id,'status'=>1])->get();
+
+      $get_progress = CourseLessonProgress::where(['course_id'=>$id,'user_id'=>Auth::User()->id])->get();
+      
       $announsments = Announcement::where('course_id','=',$id)->get();
       
       $getQuizChapter  = array();
@@ -644,11 +649,13 @@ class CourseController extends Controller
 
       $progress = CourseProgress::where('course_id','=',$id)->where('user_id', Auth::User()->id)->first();
 
+      $progress_lesson = CourseLessonProgress::where('course_id','=',$id)->where('user_id', Auth::User()->id)->first();
+
       $assignment = Assignment::where('course_id','=',$id)->where('user_id', Auth::User()->id)->get();
 
       $appointment = Appointment::where('course_id','=',$id)->where('user_id', Auth::User()->id)->get();
       
-        return view('front.course_content',compact('course', 'getQuizChapter' ,'courseinclude','whatlearns','coursechapters','courseclass', 'coursequestions', 'announsments', 'progress', 'assignment', 'appointment'));
+        return view('front.course_content',compact('get_progress', 'get_courseclass_by_cid', 'progress_lesson', 'course', 'getQuizChapter' ,'courseinclude','whatlearns','coursechapters','courseclass', 'coursequestions', 'announsments', 'progress', 'assignment', 'appointment'));
       }
      
       return Redirect::route('login')->withInput()->with('delete', trans('flash.PleaseLogin')); 

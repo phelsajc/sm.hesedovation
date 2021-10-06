@@ -5,6 +5,18 @@
 @include('admin.message')
 
 @include('sweetalert::alert')
+
+<style>
+    .modal-lg {
+        max-width: 1730px !important;
+    }
+    .done-lesson{
+        background-color: #a8adad;
+    }
+</style>
+@php
+    use App\CourseLessonProgress;
+@endphp
 <!-- courses content header start -->
 <section id="class-nav" class="class-nav-block">
     <div class="container-fluid">
@@ -20,9 +32,10 @@
                         @if($course->certificate_enable == 1)
                         <li>
                             <div class="dropdown">
-                                @if(!empty($progress))
+                                {{-- @if(!empty($progress)) --}}
+                                @if(!empty($progress_lesson))
                                     <?php
-                                    $total_class = $progress->all_chapter_id;
+                                    /* $total_class = $progress->all_chapter_id;
                                     $total_count = count($total_class);
 
                                     $total_per = 100;
@@ -30,7 +43,11 @@
                                     $read_class = $progress->mark_chapter_id;
                                     $read_count =  count($read_class);
 
-                                    $progres = ($read_count/$total_count) * 100;
+                                    $progres = ($read_count/$total_count) * 100; */
+                                    
+                                    $get_courseclass_by_cid_result = count($get_courseclass_by_cid);
+                                    $get_progress_result = count($get_progress);
+                                    $total = ($get_progress_result / $get_courseclass_by_cid_result) * 100;
                                     ?>
 
                                 @endif
@@ -38,9 +55,11 @@
                                 <i class="fas fa-trophy"></i>&nbsp; {{ __('frontstaticword.GetCertificate') }}
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                @if(!empty($progress))
+                                {{-- @if(!empty($progress)) --}}
+                                @if(!empty($total))
                                 <a class="dropdown-item"> 
-                                    {{ $read_count }} {{ __('frontstaticword.of') }} {{ $total_count }}  {{ __('frontstaticword.complete') }}
+                                    {{-- {{ $read_count }} {{ __('frontstaticword.of') }} {{ $total_count }}  {{ __('frontstaticword.complete') }} --}}
+                                    {{ $get_progress_result }} {{ __('frontstaticword.of') }} {{ $get_courseclass_by_cid_result }}  {{ __('frontstaticword.complete') }}
                                 </a>
                                 @else
                                 <a class="dropdown-item"> 
@@ -60,7 +79,8 @@
                                 </a>
                                 @endif
                                 @if(!empty($progress))
-                                    @if($read_count == $total_count)
+                                    {{-- @if($read_count == $total_count) --}}
+                                    @if($get_progress_result == $get_courseclass_by_cid_result)
                                     <div class="about-home-btn">
                                         
                                         <a href="{{ route('cirtificate.show', encrypt($course->id)) }}" class="btn btn-secondary" href="#">Get Certificate</a>
@@ -140,10 +160,10 @@
                     <h3 class="learning-courses-home-heading btm-20"><a href="{{ route('user.course.show',['id' => $course->id, 'slug' => $course->slug ]) }}" title="heading">{{ $course->title }}</a></h3>
                     <div class="learning-courses btm-20">{{ $course->user->fname }}</div>
                     <div class="learning-courses btm-20">{{ $course->short_detail }}</div>
-
-                    @if(!empty($progress))
+                    {{-- @if(!empty($progress)) --}}
+                    @if(!empty($progress_lesson))
                         <?php
-                        $total_class = $progress->all_chapter_id;
+                        /* $total_class = $progress->all_chapter_id;
                         $total_count = count($total_class);
 
                         $total_per = 100;
@@ -151,13 +171,19 @@
                         $read_class = $progress->mark_chapter_id;
                         $read_count =  count($read_class);
 
-                        $progres = ($read_count/$total_count) * 100;
+                        $progres = ($read_count/$total_count) * 100; */
+
+                        $get_courseclass_by_cid_result = count($get_courseclass_by_cid);
+                        $get_progress_result = count($get_progress);
+                        $total = ($get_progress_result / $get_courseclass_by_cid_result) * 100;
+
                         ?>
     
                     <div class="progress-block">
                         <div class="one histo-rate">
                             <span class="bar-block" style="width: 100%">
-                                <span id="bar-one" style="width: <?php echo $progres; ?>%" class="bar bar-clr bar-radius">&nbsp;</span> 
+                                {{-- <span id="bar-one" style="width: <?php echo $progres; ?>%" class="bar bar-clr bar-radius">&nbsp;</span>  --}}
+                                <span id="bar-one" style="width: <?php echo $total; ?>%" class="bar bar-clr bar-radius">&nbsp;</span>
                             </span>
                         </div>
                         <i class="fa fa-trophy lft-7"></i>
@@ -444,7 +470,7 @@
                                                     <tr>
                                                         <td width="10px">
                                                             <div class="form-check">
-                                                                <input class="form-check-input filled-in material-checkbox-input" type="checkbox" name="checked[]" value="{{$coursechapter->id}}" id="checkbox{{$coursechapter->id}}"  {{ isset($progress->mark_chapter_id) && in_array($coursechapter->id, $progress->mark_chapter_id) ? "checked" : "" }} >
+                                                                {{-- <input class="form-check-input filled-in material-checkbox-input" type="checkbox" name="checked[]" value="{{$coursechapter->id}}" id="checkbox{{$coursechapter->id}}"  {{ isset($progress->mark_chapter_id) && in_array($coursechapter->id, $progress->mark_chapter_id) ? "checked" : "" }} > --}}
                                                                 <label class="form-check-label" for="invalidCheck">
                                                                 </label>
                                                             </div>
@@ -523,8 +549,10 @@
                                     <div class="card-body">
                                         <table class="table">  
                                             <tbody>
-                                                <tr>
-                                                    
+                                                @php                                                        
+                                                    $progress_lesson = CourseLessonProgress::where('lesson_id','=',$class->id)->where('course_id','=',request()->route('id'))->where('user_id', Auth::User()->id)->first();
+                                                @endphp  
+                                                <tr class="@if($progress_lesson) done-lesson @endif">   
                                                     <td class="class-type">
                                                         @if($class->type =='video' && $class->video )
                                                           <a href="{{ route('watchcourseclass',$class->id) }}" title="Course" class="@if($z == 0)iframe @endif"><i class="fa fa-play-circle"></i>&nbsp;{{ __('frontstaticword.class') }}</a>
@@ -599,16 +627,45 @@
 
                                                     <td class="class-size txt-rgt">
                                                         @if($class->type =='video' || $class->type =='audio')
-                                                            {{ $class->duration }} {{ __('frontstaticword.min') }}
+                                                            @if($class->duration)
+                                                                {{ $class->duration }} {{ __('frontstaticword.min') }}
+                                                            @endif
                                                         @endif
                                                         @if($class->type =='image' || $class->type =='pdf' || $class->type =='zip' )
-                                                            {{ $class->size }} Mb
+                                                            @if($class->size)
+                                                                {{ $class->size }} Mb
+                                                            @endif
                                                         @endif
 
                                                         @if($class->file != NULL)
                                                         <a href="{{ asset('files/class/material/'.$class->file) }}" download title="Learning Material"><i class="fa fa-download"></i></a>
                                                         @endif
                                                     </td>
+
+                                                    <td class="class-size txt-rgt">
+                                                        @if(!$progress_lesson)
+                                                            <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#lessonModal{{ $class->id }}">Complete</button>
+                                                        @endif
+                                                    </td>
+
+                                                    <div id="lessonModal{{$class->id}}" class="delete-modal modal fade" role="dialog">
+                                                        <div class="modal-dialog modal-sm">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                              <div class="delete-icon"></div>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                              <h4 class="modal-heading">Complete Lesson</h4>
+                                                              <p>Are done with this lesson?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
+                                                                <button type="button" class="btn btn-xs btn-danger" onclick="complete_lesson({{$class->id}},{{request()->route('id')}})">Complete</button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
                                                 </tr>
                                                 
                                             </tbody>
@@ -665,9 +722,9 @@
                         </div>
                         
                         <div class="mark-read-button">
-                            <button type="submit" class="btn btn-md btn-primary">
+                            {{-- <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('frontstaticword.MarkasComplete') }}
-                            </button>
+                            </button> --}}
                         </div>
                         </form>
                     </div>
@@ -1479,7 +1536,9 @@
                         </div>
                         <br>
                         <div class="box-footer">
-                         <button type="button" onclick="saveJournal()" class="btn btn-lg col-md-3 btn-primary">{{ __('frontstaticword.Submit') }}</button>
+                            <button type="button" onclick="saveJournal(0)" class="btn btn-lg btn-primary" id="saveJoural">{{ __('frontstaticword.Submit') }}</button>
+                            <button type="button" onclick="saveJournal(1)" class="btn btn-lg btn-primary" id="draftJoural">Save as Draft</button>
+                            <p id="sts_txt"></p>
                         </div>
                     </form>
                 </div>
@@ -1487,7 +1546,7 @@
             </div>
           </div>
         </div>
-    </div>
+    </div>   
 
 </section>
 <!-- courses-content end -->
@@ -1561,19 +1620,33 @@ $(document).bind('cbox_closed', function(){
     });
   });
 })(jQuery);
-function open_journal(id) {
+    function open_journal(id) {
         //id -> class id or lesson id
-                    tinymce.get("journal_content").setContent('');
+      //  $("#journal_content").summernote("code", " ");
+      
+                   tinymce.get("journal_content").setContent('');
         $.ajax({
             url: "{{ url('viewlessonJournal') }}/"+id,
             type: "get",
             dataType: 'JSON',
             success: function(data) {
                 if(data){
-                    tinymce.get("journal_content").setContent(data.content);
+                    tinymce.get("journal_content").setContent(data.content);                    
+                    //  $("#journal_content").summernote("code", data.content);
                     $("#jid").val(data.id);
-                }else{                    
+                    if(data.checked_status=="1"){
+                        tinymce.activeEditor.setMode('readonly');
+                        $("#sts_txt").text("Status: Accepted")
+                        $("#saveJoural").addClass("hidden")
+                        $("#draftJoural").addClass("hidden") 
+                    }else{
+                        $("#sts_txt").text("Status: Rejected")
+                        tinymce.activeEditor.setMode('design'); 
+                    }
+                }else{                   
                     tinymce.get("journal_content").setContent('');
+                        $("#sts_txt").text("")
+                    //  $("#journal_content").summernote("code", " ");
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -1589,31 +1662,64 @@ function open_journal(id) {
 
     }
 
-    function saveJournal() {
-        var j = $('#journalForm').serializeArray();
-        console.log(j)
-        j.push({
-            name: "content",
-            value:  tinymce.get("journal_content").getContent(),
-        });
+    function saveJournal(isdraft) {
+        var msg = "Do you want to save as draft?"
+        if(isdraft==0){
+            var msg = "Do you want to submit as final?"
+        }
+        if (confirm(msg)) {
+            var j = $('#journalForm').serializeArray();
+            j.push({
+                name: "content",
+                value:  tinymce.get("journal_content").getContent(),//$('#journal_content').summernote('code'),// tinymce.get("journal_content").getContent(),
+            });
+            j.push({
+                name: "isdraft",
+                value: isdraft
+            });
+            $.ajax({
+                url: "{{ url('savelessonJournal') }}",
+                type: "post",
+                data:j,            
+                enctype: 'multipart/form-data',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    $("#modalJournal").modal('hide');
+                    $("#jid").val(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                }
+            });
+        } else {
+            
+        }
+        
+    }
+
+    function complete_lesson(lid,cid) {  
         $.ajax({
-            url: "{{ url('savelessonJournal') }}",
-            type: "post",
-            data:j,            
+            url: "{{ url('course/checked_lesson') }}/"+lid+"/"+cid,
+            type: "post",    
             enctype: 'multipart/form-data',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: 'JSON',
             success: function(data) {
-                $("#modalJournal").modal('hide');
-                $("#jid").val(data);
+                location.reload();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
-                alert("Image size is too big.")
             }
-        });
+        });        
+    }
+
+    function show_modal_complete_lesson(lid,cid) {  
+        $("#lessonModal").modal('show')     
     }
 </script>
 
@@ -1669,11 +1775,14 @@ function open_journal(id) {
 (function($) {
   "use strict";
   //  tinymce.init({selector:'textarea'});
-
-    tinymce.init({   
-            selector: 'textarea',    
-            //rtl_ui:true,
-            //directionality :"rtl",
+    /* $('#journal_content').summernote({
+        height: 500,
+        width: 1700,
+        disableResizeEditor: true,
+    }); */
+   
+     tinymce.init({   
+            selector: 'textarea#journal_content',    
             height: 250,
             menubar: 'edit view insert format tools table tc',
             autosave_ask_before_unload: true,
@@ -1681,7 +1790,6 @@ function open_journal(id) {
             autosave_prefix: "{path}{query}-{id}-",
             autosave_restore_when_empty: false,
             autosave_retention: "2m",
-           // image_advtab: true,
   image_caption: true,
   external_filemanager_path:"filemanager/",
             plugins: [
@@ -1689,8 +1797,12 @@ function open_journal(id) {
             'searchreplace visualblocks fullscreen',
             'insertdatetime media table paste wordcount'
             ],
-           //toolbar: 'imageupload | undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media  template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
             toolbar: 'imageupload | undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print |  a11ycheck ltr rtl | showcomments addcomment',
+            
+  object_resizing : true,
+
+  theme_advanced_resizing: true,
+    theme_advanced_resizing_use_cookie : false,
             content_css: '//www.tiny.cloud/css/codepen.min.css'  ,
         setup: function(editor) {
             var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
@@ -1717,7 +1829,39 @@ function open_journal(id) {
                 }
             });
         }
-        });
+        }); 
+
+        /* tinymce.init({
+            selector: 'textarea#journal_content',  
+  plugins: 'image code autoresize',
+  toolbar: 'undo redo | link image | code',
+  autoresize_on_init: true,
+  image_title: true,
+  automatic_uploads: true,
+  file_picker_types: 'image',
+  file_picker_callback: function (cb, value, meta) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.onchange = function () {
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function () {
+        var id = 'blobid' + (new Date()).getTime();
+        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        var base64 = reader.result.split(',')[1];
+        var blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  },
+  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+}); */
+
+
 })(jQuery);
 </script>
 

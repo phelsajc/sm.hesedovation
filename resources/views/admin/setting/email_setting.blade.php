@@ -9,11 +9,11 @@
     <div class="col-xs-12">
       <div class="box box-primary">
         <div class="box-header with-border">
-            <h1 class="box-title">{{ __('adminstaticword.GeneralSetting') }}</h1>
+            <h1 class="box-title">Mail</h1>
         </div>
     	 <div class="box-body">
           <!-- Nav tabs -->
-          @include('admin.setting.genral')
+          @include('admin.setting.mailsetting')
           {{-- <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="nav-tab" role="tablist">
               <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><i class="flaticon-optimization" aria-hidden="true"></i> {{ __('adminstaticword.GeneralSetting') }}</a></li>

@@ -173,6 +173,10 @@ Route::middleware(['web'])->group(function () {
 
             Route::post('mailsetting/update','SettingController@updateMailSetting')->name('update.mail.set');
             Route::get('settings','SettingController@genreal')->name('gen.set');
+            Route::get('settings/cs_set','SettingController@customstyleing_setting')->name('cs_set');
+            Route::get('settings/em_set','SettingController@em_setting')->name('em_set');
+            Route::get('settings/se_set','SettingController@se_setting')->name('se_set');
+            Route::get('settings/sl_set','SettingController@sl_setting')->name('sl_set');
             Route::post('setting/store','SettingController@store')->name('setting.store');
             Route::post('setting/seo','SettingController@updateSeo')->name('seo.set');
             Route::post('setting/addcss','SettingController@storeCSS')->name('css.store');
@@ -467,7 +471,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('removefromcart/{id}','CartController@removefromcart')
           ->name('remove.item.cart');
         Route::get('all/cart', 'CartController@cartpage')->name('cart.show');
-        Route::post('gotocheckout', 'CheckoutController@checkoutpage');
+        Route::match(['get','post'],'gotocheckout','CheckoutController@checkoutpage');
         
         Route::get('notifications/{id}', 'NotificationController@markAsRead')
         ->name('markAsRead');
@@ -585,6 +589,8 @@ Route::middleware(['web'])->group(function () {
         Route::delete('destroy/meeting/{id}','MeetingController@destroy')->name('zoom.destroy');
 
         Route::post('course/checked/{id}', 'CourseProgressController@checked');
+        Route::post('course/checked_lesson/{lid}/{cid}', 'CourseLessonProgressController@checked');
+        
 
         Route::post('bundle/cart/{id}', 'BundleCourseController@addtocart')->name('bundlecart');
         Route::get('bundle/detail/{id}', 'BundleCourseController@detailpage')->name('bundle.detail');
@@ -737,6 +743,10 @@ Route::middleware(['web'])->group(function () {
           
         
         Route::get('getLessons/{id}/{course_id}','CoursechapterController@showLessons');
+        
+        Route::post('check_journal','ApiCustomController@check_journal');
+
+        
     });
 
   });

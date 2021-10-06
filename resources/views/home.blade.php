@@ -1,7 +1,11 @@
 @extends('theme.master')
 @section('title', 'Online Courses')
 @section('content')
-
+<style>
+    .image-container .image-overlay{
+        background: none !important;
+    }
+</style>
 @include('admin.message')
 @include('sweetalert::alert')
 <!-- categories-tab start-->
@@ -99,7 +103,7 @@
 
 @if(Auth::check())
 @if( isset($recent_course_id) )
-<section id="student" class="student-main-block top-40">
+{{-- <section id="student" class="student-main-block top-40">
     <div class="container">
         
         @if($total_count !== 0)
@@ -296,7 +300,7 @@
         @endif
         
     </div>
-</section>
+</section> --}}
 @endif
 @endif
 <!-- Students end -->
@@ -312,7 +316,7 @@ else{
 }
 @endphp
 @if( isset($enroll) )
-<section id="student" class="student-main-block top-40">
+{{-- <section id="student" class="student-main-block top-40">
     <div class="container">
        
         @if(count($enroll) > 0)
@@ -498,7 +502,7 @@ else{
         @endif
         
     </div>
-</section>
+</section> --}}
 @endif
 @endif
 <!-- Students end -->
@@ -573,18 +577,24 @@ else{
 @php
 use App\User;
 use App\Categories;
-$cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchive', 0)->get();
+$cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchive', 0)->inRandomOrder()->take(12)->get();
+//$cors = DB::connection('mysql')->select("select * from courses where status = '7' and featured = '1' and isarchive = 0 ORDER BY RAND() limit 12");
+/*
+
+$result = DB::connection('mysql')->select("select * from courses where status = '7' and featured = '1' and isarchive = 0 ORDER BY RAND() limit 12");
+$cors = json_decode(json_encode($result), true);*/
 @endphp
 @if( ! $cors->isEmpty() )
 <section id="student" class="student-main-block">
     <div class="container">
-        <h4 class="student-heading">{{ __('frontstaticword.FeaturedCourses') }}</h4>
+        <h4 class="student-heading">TOP 12 {{ __('frontstaticword.FeaturedCourses') }}</h4>
         <div id="student-view-slider" class="student-view-slider-main-block owl-carousel">
             @foreach($cors as $c)
               @if($c->status == 7 && $c->featured == 1)
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c->id}}">
+                            <div class="view-block">
                             <div class="view-img">
                                 @if($c['preview_image'] !== NULL && $c['preview_image'] !== '')
                                     <a href="{{ route('user.course.show',['id' => $c->id, 'slug' => $c->slug ]) }}"><img data-src="{{ asset('images/course/'.$c['preview_image']) }}" alt="course" class="img-fluid owl-lazy"></a>
@@ -822,7 +832,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                                                 @if(Auth::check())
                                                     @if(Auth::User()->role == "admin")
                                                         <div class="protip-btn">
-                                                            <a href="{{ route('course.content',['id' => $c->id, 'slug' => $c->slug ]) }}" class="btn btn-secondary" title="course">{{ __('frontstaticword.GoToCourse') }}</a>
+                                                            <a href="{{ route('course.content',['id' => $c->id, 'slug' => $c->slug ]) }}" class="btn btn-secondary" title="course">1{{ __('frontstaticword.GoToCourse') }}</a>
                                                         </div>
                                                     @else
                                                         @php
@@ -973,7 +983,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
 @foreach ($section as $section_index => $section_item)
 <section id="student" class="student-main-block">
     <div class="container">
-        <h4 class="student-heading">{{$section_item->title}}</h4>
+        <h4 class="student-heading">TOP 12 {{$section_item->title}}</h4>
         <div id="custom_slider{{$section_index}}" class="student-view-slider-main-block owl-carousel">
             {{-- @foreach($blogs as $blog)
                 
@@ -1044,35 +1054,37 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                     })->get();  */
                 
                 if($section_item->category==1){
-                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and ($fcatid) and isarchive = 0");
+                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and ($fcatid) and isarchive = 0 ORDER BY RAND() limit 12");
                     $ff = json_decode(json_encode($courses_section),true);   
                 }elseif($section_item->category==2){
-                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and type = '0' and isarchive = 0");
+                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and type = '0' and isarchive = 0 ORDER BY RAND() limit 12");
                     $ff = json_decode(json_encode($courses_section),true);   
                 }elseif($section_item->category==3){
-                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and discount_price > 0 and isarchive = 0");
+                    $courses_section = DB::connection('mysql')->select("select * from courses where status = '7' and discount_price > 0 and isarchive = 0 ORDER BY RAND() limit 12");
                     $ff = json_decode(json_encode($courses_section),true);  
                 }
             @endphp
             
             @foreach($ff as $c)
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c['id']}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c['id']}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block{{$c['id']}}">
+                            <div class="view-block">
+                                @php
+                                    $txt = explode(":",$c['title']);
+                                @endphp
                             <div class="view-img">
                                 @if($c['preview_image'] !== NULL && $c['preview_image'] !== '')
                                     <a href="{{ route('user.course.show',['id' => $c['id'], 'slug' => $c['slug'] ]) }}"><img data-src="{{ asset('images/course/'.$c['preview_image']) }}" alt="course" class="img-fluid owl-lazy"></a>
                                 @else
-                                    <a href="{{ route('user.course.show',['id' => $c['id'], 'slug' => $c['slug'] ]) }}"><img data-src="{{ Avatar::create($c['title'])->toBase64() }}" alt="course" class="img-fluid owl-lazy"></a>
+                                    <a href="{{ route('user.course.show',['id' => $c['id'], 'slug' => $c['slug'] ]) }}"><img data-src="{{ Avatar::create(substr($txt[1], 1, 1))->toBase64() }}" alt="course" class="img-fluid owl-lazy"></a>
                                 @endif
                             </div>
                             @if($c['tags'] == !NULL)
                             <div class="best-seller">{{ $c['tags'] }}</div>
                             @endif
                             <div class="view-dtl">
-                                @php
-                                    $txt = explode(":",$c['title']);
-                                @endphp
+                                {{-- <div class="view-heading btm-10"><a href="{{ route('user.course.show',['id' => $c->id, 'slug' => $c->slug ]) }}">{{ str_limit($c->title, $limit = 30, $end = '...') }}</a></div> --}}
                                 <div class="view-heading btm-10"><a href="{{ route('user.course.show',['id' => $c['id'], 'slug' => $c['slug'] ]) }}">{{ str_limit(str_replace('}', '', $txt[1]), $limit = 30, $end = '...') }}</a></div>
                                 @php
                                     $getUserData = User::where(['id'=>$c['user_id']])->first();
@@ -1607,8 +1619,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                 @if($bundle->status == 1)
              
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-4{{$bundle->id}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-4{{$bundle->id}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-4{{$bundle->id}}">
+                            <div class="view-block">
                             <div class="view-img">
                                 @if($bundle['preview_image'] !== NULL && $bundle['preview_image'] !== '')
                                     <a href="{{ route('bundle.detail', $bundle->id) }}"><img data-src="{{ asset('images/bundle/'.$bundle['preview_image']) }}" alt="course" class="img-fluid owl-lazy"></a>
@@ -1802,8 +1815,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                 @if($batch->status == 1)
              
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-5{{$batch->id}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-5{{$batch->id}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-5{{$batch->id}}">
+                            <div class="view-block">
                             <div class="view-img">
                                 @if($batch['preview_image'] !== NULL && $batch['preview_image'] !== '')
                                     <a href="{{ route('batch.detail', $batch->id) }}"><img data-src="{{ asset('images/batch/'.$batch['preview_image']) }}" alt="course" class="img-fluid owl-lazy"></a>
@@ -1871,8 +1885,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
         <div id="zoom-view-slider" class="student-view-slider-main-block owl-carousel">
             @foreach($meetings as $meeting)
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-6{{$meeting->id}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-6{{$meeting->id}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-6{{$meeting->id}}">
+                            <div class="view-block">
                             <div class="view-img">
 
                                 @if($meeting['image'] !== NULL && $meeting['image'] !== '')
@@ -1932,8 +1947,9 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                 
              
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-7{{$bbl->id}}">
-                        <div class="view-block">
+                    {{-- <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-7{{$bbl->id}}"> --}}
+                    <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-7{{$bbl->id}}">
+                            <div class="view-block">
                             <div class="view-img">
                                 <a href="{{ route('bbl.detail', $bbl->id) }}"><img data-src="{{ Avatar::create($bbl['meetingname'])->toBase64() }}" alt="course" class="img-fluid owl-lazy"></a>
                             </div>
@@ -1980,7 +1996,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
 
 <!-- Bundle start -->
 @if( ! $blogs->isEmpty() )
-<section id="student" class="student-main-block">
+{{-- <section id="student" class="student-main-block">
     <div class="container">
         
         <h4 class="student-heading">{{ __('frontstaticword.RecentBlogs') }}</h4>
@@ -1989,8 +2005,8 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                 
              
                 <div class="item student-view-block student-view-block-1">
-                    <div class="genre-slide-image @if($gsetting['course_hover'] == 1) protip @endif" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-8{{$blog->id}}">
-                        <div class="view-block">
+                        <div class="genre-slide-image" data-pt-placement="outside" data-pt-interactive="false" data-pt-title="#prime-next-item-description-block-8{{$blog->id}}">
+                            <div class="view-block">
                             <div class="view-img">
                                 @if($blog['image'] !== NULL && $blog['image'] !== '')
                                     <a href="{{ route('blog.detail', $blog->id) }}"><img data-src="{{ asset('images/blog/'.$blog['image']) }}" alt="course" class="img-fluid owl-lazy"></a>
@@ -2039,7 +2055,7 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
         </div>
         
     </div>
-</section>
+</section> --}}
 @endif
 <!-- Bundle end -->
 <!-- recommendations start -->
@@ -2080,16 +2096,16 @@ $cors = App\Course::where('status', '7')->where('featured', '1')->where('isarchi
                 <div class="image-container">
                 <a href="{{ route('category.page',['id' => $t->id, 'category' => $t->title]) }}">
 
-                  <div class="image-overlay">
+                  {{-- <div class="image-overlay">
                     <i class="fa {{ $t['icon'] }}"></i>{{ $t['title'] }}
-                  </div>
+                  </div> --}}
 
                   @if($t['cat_image'] == !NULL)
                     <img src="{{ asset('images/category/'.$t['cat_image']) }}">
                   @else
                     <img src="{{ Avatar::create($t->title)->toBase64() }}">
                   @endif
-                </a>
+                </a> <strong>{{ $t['title'] }}</strong>
                 </div>
                 
             </div>

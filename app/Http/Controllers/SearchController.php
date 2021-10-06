@@ -19,7 +19,7 @@ class SearchController extends Controller
 
             
 
-            $course_title = Course::where('title', 'LIKE', "%$searchTerm%")->where('status','=',1)->get();
+            $course_title = Course::where('title', 'LIKE', "%$searchTerm%")->where('status','=','7')->get();
 
             if (isset($course_title) && count($course_title) > 0)
             {
@@ -29,7 +29,7 @@ class SearchController extends Controller
 
             }
 
-            $course_tags = Course::where('tags', 'LIKE', "%$searchTerm%")->where('status','=',1)->get();
+            $course_tags = Course::where('tags', 'LIKE', "%$searchTerm%")->where('status','=','7')->get();
 
             if (isset($course_tags) && count($course_tags) > 0)
             {
@@ -42,6 +42,7 @@ class SearchController extends Controller
             $search_data = $search_data->flatten();
 
         	$courses = Course::search($searchTerm)->paginate(20);
+            //dd($search_data);exit;
         	return view('front.search', compact('search_data', 'searchTerm'));
     	}
     	else

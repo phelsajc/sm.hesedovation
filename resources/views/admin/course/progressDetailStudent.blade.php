@@ -3,6 +3,11 @@
 
 @section('body')
 
+<style>
+  .modal-lg {
+  width: 1730px !important;
+}
+</style>
 <section class="content">
     @include('admin.message')
     <div class="row">
@@ -19,7 +24,7 @@
                    <ul class="nav nav-stacked" id="nav-tab" role="tablist"> 
            
                         <li role="presentation" class="active"><a href="#a" aria-controls="home" role="tab" data-toggle="tab">Journal</a></li>
-                        <li class=""  role="presentation"><a href="#b" aria-controls="profile" role="tab" data-toggle="tab">Article</a></li>
+                       {{--  <li class=""  role="presentation"><a href="#b" aria-controls="profile" role="tab" data-toggle="tab">Article</a></li> --}}
                         <li  class=""  role="presentation"><a href="#c" aria-controls="messages" role="tab" data-toggle="tab">Quiz</a></li>
                     
                     </ul>
@@ -29,8 +34,63 @@
                   <div class="tab-content">
   
                 <div role="tabpanel" class="tab-pane fade in active" id="a">
-                    {!!$course_journal['content']!!} 
-                    <button type="button" class="btn btn-success btn-xs">View Comments</button>
+                   {{--  {!!$course_journal['content']!!} 
+                    <button type="button" class="btn btn-success btn-xs">View Comments</button> --}}
+
+                    <table id="tblCourseMember" class="table table-bordered table-striped compact">
+                      <thead>
+                          <tr>
+                            <th>Chapter</th>
+                            <th>Journal Status</th>
+                            <th>Status</th>
+                          <th>Created Date</th>
+                          <th>Action</th>
+                          </tr>
+                      </thead>
+                      @php
+                       use App\CourseClass;
+                      @endphp
+                      @foreach ($course_journal as $item)
+                        @php
+                            $getclass = CourseClass::where(["id" => $item->class_id])->first();
+                        @endphp
+                        <tr>
+                          <td>{{$getclass->title}} </td>
+                          @php
+                              $st = '';
+                              if($item->checked_status==1){
+                                $st = 'Accepted';
+                              }else if($item->checked_status==0&&$item->checked_status!=null){
+                                $st = 'Rejected';
+                              }
+                          @endphp
+                          <td>{{$item->isdraft==1?'Draft':'Done'}} </td>
+                          <td>{{$st}} </td>
+                          <td>{{date_format(date_create($item->created_dt),'F d,Y h:i A')}} </td>
+                          <td><button type="button" title="Archive" data-toggle="modal" data-target="#journal_modal{{ $item->id }}" class="dd btn-danger">View</button></td>
+                        </tr>
+
+
+                        <div id="journal_modal{{ $item->id }}" class="delete-modal modal fade" role="dialog">
+                          <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <div class="delete-icon"></div>
+                              </div>
+                              <div class="modal-body text-center">
+                                {!!$item->content!!} 
+                              </div>
+                              <div class="modal-footer">                                
+                                <button type="button" onclick="check_journal(1,{{ $item->id }})" class="btn btn-lg btn-success">Accept</button>
+                                <button type="button" onclick="check_journal(0,{{ $item->id }})" class="btn btn-lg btn-primary">Reject</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      @endforeach
+                    </table>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="b">
                     
@@ -42,10 +102,10 @@
                       <thead>
                           <tr>
                           <th>Title</th>
-                          <th>Total No. of Questions.</th>
-                           <th>Correct No. of Questions</th>
-                         <th>Per Question Mark</th>
-                          <th>Total Marks</th>
+                          {{-- <th>Total No. of Questions</th>
+                          <th>Correct No. of Questions</th>
+                          <th>Per Question Mark</th>
+                          <th>Total Marks</th> --}}
                           <th>Action</th>
                           </tr>
                       </thead>
@@ -85,9 +145,9 @@
                                 $get_total_topic =  $value['per_q_mark']*$qu_count;
 
                                 @endphp
-                            <td>
+                            {{-- <td>
                               {{$get_qu_count}}
-                            </td>
+                            </td> --}}
 
                               @php
                                   $ca=0;
@@ -98,7 +158,7 @@
                                   $check_pg_or_sa=0;
                                   $counter_array = array();
                                   
- /*  dd($ans); */
+
                                 foreach ($ans as $key => $values) {
                                     $row = array();
                                     $row['answer'] = $values->answer;
@@ -216,18 +276,18 @@
                       @endif
 
                               @endforeach
-                          <td>
-                              {{-- {{$ca}} --}}
-                              {{sizeof($counter_array)}} x
-                            </td> 
+                          {{-- <td>
+                              { {{$ca}} }}
+                              {{sizeof($counter_array)}}
+                            </td>  --}}
 
-                            <td>{!!$get_per_q!!}</td>
+                            {{-- <td>{!!$get_per_q!!}</td> --}}
                             @php
                                 $correct = ($mark*$get_per_q) + $check_pg_or_sa;
                             @endphp
-                            <td>
+                            {{-- <td>
                               {{$correct}} 
-                            </td>
+                            </td> --}}
                             <td>
                              <button type="button" class="btn btn-xs btn-info" onclick="checkResults({{$value['id']}})">View</button>
                             </td>
@@ -265,6 +325,40 @@
     location = "{{URL::to('/checkResults/')}}/"+id
   }
 
+  function check_journal(status,id) {
+        var msg = "Do you want to accept this journal?"
+        if(status==0){
+            var msg = "Do you want to reject this journal?"
+        }
+        if (confirm(msg)) {
+            $.ajax({
+                url: "{{ url('check_journal') }}",
+                type: "post",
+                data:{
+                  status:status,
+                  id:id
+                },            
+                enctype: 'multipart/form-data',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    $("#modalJournal").modal('hide');
+                    $("#jid").val(data);
+                    location = location
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    alert("Image size is too big.")
+                }
+            });
+        } else {
+            
+        }
+        
+    }
+    
 </script>
 
 @endsection

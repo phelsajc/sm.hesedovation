@@ -65,7 +65,8 @@
 
          @if(!empty($users))
             <div class="alert alert-danger">
-                You have already Given the test ! Try to give other Quizes
+                {{-- You have already Given the test ! Try to give other Quizes --}}
+                You have already taken the quiz.
             </div>
          @else
         <div id="question_block" class="question-block">

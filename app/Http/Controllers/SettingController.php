@@ -7,44 +7,200 @@ use App\Setting;
 
 class SettingController extends Controller
 {
-    public function genreal()
-    {
-      $env_files = [
-        'APP_URL' => env('APP_URL'),
-        'APP_DEBUG' => env('APP_DEBUG'),
-        'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
-        'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
-        'MAIL_DRIVER' => env('MAIL_DRIVER'),
-        'MAIL_HOST' => env('MAIL_HOST'),
-        'MAIL_PORT' => env('MAIL_PORT'),
-        'MAIL_USERNAME' => env('MAIL_USERNAME'),
-        'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
-        'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
-        'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
-        'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
-        'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
-        'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
-        'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
-        'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
-        'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
-        'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
-        'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
-        'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
-        'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
-        'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
-        'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
-        'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
-        'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
-        'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
-        'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
-        'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
+  public function genreal()
+  {
+    $env_files = [
+      'APP_URL' => env('APP_URL'),
+      'APP_DEBUG' => env('APP_DEBUG'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_DRIVER' => env('MAIL_DRIVER'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+      'MAIL_PORT' => env('MAIL_PORT'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+      'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
+      'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
+      'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
+      'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
+      'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
+      'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
+      'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
+      'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
+      'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
+      'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
+      'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
+      'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
+      'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
+      'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
+      'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
+      'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
+      'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
+      'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
 
-      ];
-      $setting = Setting::first();
-      $css = @file_get_contents("css/custom-style.css");
-      $js = @file_get_contents("js/custom-js.js");
-      return view('admin.setting.setting',compact('css','js','setting','env_files'));
-    }
+    ];
+    $setting = Setting::first();
+    $css = @file_get_contents("css/custom-style.css");
+    $js = @file_get_contents("js/custom-js.js");
+    return view('admin.setting.setting',compact('css','js','setting','env_files'));
+  }
+
+  public function customstyleing_setting()
+  {
+    $env_files = [
+      'APP_URL' => env('APP_URL'),
+      'APP_DEBUG' => env('APP_DEBUG'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_DRIVER' => env('MAIL_DRIVER'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+      'MAIL_PORT' => env('MAIL_PORT'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+      'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
+      'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
+      'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
+      'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
+      'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
+      'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
+      'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
+      'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
+      'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
+      'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
+      'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
+      'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
+      'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
+      'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
+      'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
+      'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
+      'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
+      'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
+
+    ];
+    $setting = Setting::first();
+    $css = @file_get_contents("css/custom-style.css");
+    $js = @file_get_contents("js/custom-js.js");
+    return view('admin.setting.customstyle_setting',compact('css','js','setting','env_files'));
+  }
+  
+  public function em_setting()
+  {
+    $env_files = [
+      'APP_URL' => env('APP_URL'),
+      'APP_DEBUG' => env('APP_DEBUG'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_DRIVER' => env('MAIL_DRIVER'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+      'MAIL_PORT' => env('MAIL_PORT'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+      'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
+      'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
+      'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
+      'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
+      'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
+      'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
+      'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
+      'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
+      'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
+      'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
+      'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
+      'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
+      'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
+      'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
+      'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
+      'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
+      'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
+      'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
+
+    ];
+    $setting = Setting::first();
+    $css = @file_get_contents("css/custom-style.css");
+    $js = @file_get_contents("js/custom-js.js");
+    return view('admin.setting.email_setting',compact('css','js','setting','env_files'));
+  }
+  
+  public function se_setting()
+  {
+    $env_files = [
+      'APP_URL' => env('APP_URL'),
+      'APP_DEBUG' => env('APP_DEBUG'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_DRIVER' => env('MAIL_DRIVER'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+      'MAIL_PORT' => env('MAIL_PORT'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+      'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
+      'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
+      'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
+      'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
+      'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
+      'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
+      'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
+      'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
+      'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
+      'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
+      'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
+      'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
+      'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
+      'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
+      'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
+      'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
+      'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
+      'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
+
+    ];
+    $setting = Setting::first();
+    $css = @file_get_contents("css/custom-style.css");
+    $js = @file_get_contents("js/custom-js.js");
+    return view('admin.setting.seo_setting',compact('css','js','setting','env_files'));
+  }
+  
+  public function sl_setting()
+  {
+    $env_files = [
+      'APP_URL' => env('APP_URL'),
+      'APP_DEBUG' => env('APP_DEBUG'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_DRIVER' => env('MAIL_DRIVER'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+      'MAIL_PORT' => env('MAIL_PORT'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+      'FACEBOOK_CLIENT_ID' => env('FACEBOOK_CLIENT_ID'),
+      'FACEBOOK_CLIENT_SECRET' => env('FACEBOOK_CLIENT_SECRET'),
+      'FACEBOOK_CALLBACK_URL' => env('FACEBOOK_CALLBACK_URL'),
+      'GOOGLE_CLIENT_ID' => env('GOOGLE_CLIENT_ID'),
+      'GOOGLE_CLIENT_SECRET' => env('GOOGLE_CLIENT_SECRET'),
+      'GOOGLE_CALLBACK_URL' => env('GOOGLE_CALLBACK_URL'),
+      'GITLAB_CLIENT_ID' => env('GITLAB_CLIENT_ID'),
+      'GITLAB_CLIENT_SECRET' => env('GITLAB_CLIENT_SECRET'),
+      'GITLAB_CALLBACK_URL' => env('GITLAB_CALLBACK_URL'),
+      'AMAZON_LOGIN_ID' => env('AMAZON_LOGIN_ID'),
+      'AMAZON_LOGIN_SECRET' => env('AMAZON_LOGIN_SECRET'),
+      'AMAZON_LOGIN_REDIRECT' => env('AMAZON_LOGIN_REDIRECT'),
+      'LINKEDIN_CLIENT_ID' => env('LINKEDIN_CLIENT_ID'),
+      'LINKEDIN_CLIENT_SECRET' => env('LINKEDIN_CLIENT_SECRET'),
+      'LINKEDIN_CALLBACK_URL' => env('LINKEDIN_CALLBACK_URL'),
+      'TWITTER_CLIENT_ID' => env('TWITTER_CLIENT_ID'),
+      'TWITTER_CLIENT_SECRET' => env('TWITTER_CLIENT_SECRET'),
+      'TWITTER_CALLBACK_URL' => env('TWITTER_CALLBACK_URL'),
+
+    ];
+    $setting = Setting::first();
+    $css = @file_get_contents("css/custom-style.css");
+    $js = @file_get_contents("js/custom-js.js");
+    return view('admin.setting.sls_setting',compact('css','js','setting','env_files'));
+  }
 
     public function store(Request $request)
     {
